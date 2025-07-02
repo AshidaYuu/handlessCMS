@@ -7,11 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next build",
     "sanity": "cd ../sanity && npm run dev",
-    "deploy": "npm run build",
-    "audit": "npm audit --audit-level moderate",
-    "check-types": "tsc --noEmit"
+    "audit": "npm audit --audit-level moderate"
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",

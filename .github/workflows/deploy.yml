@@ -53,13 +53,7 @@ jobs:
     - name: 🏗️ Build Next.js application
       run: |
         cd frontend
-        npm run build
-        
-    # 静的ファイルのエクスポート
-    - name: 📤 Export static files
-      run: |
-        cd frontend
-        npm run build
+        NEXT_TELEMETRY_DISABLED=1 npm run build
         
     # ビルド成果物のアップロード
     - name: 📁 Upload build artifacts
@@ -70,10 +64,11 @@ jobs:
         retention-days: 1
 
   # デプロイジョブ（mainブランチのみ）
+  # 一時的に無効化 - Xserver設定後に有効化
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: false  # 一時的に無効化
     
     steps:
     # ビルド成果物のダウンロード
