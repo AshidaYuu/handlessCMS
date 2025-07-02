@@ -63,9 +63,33 @@ jobs:
         # 必要な静的ファイルをコピー
         cp -r .next/static export/
         cp -r public/* export/ 2>/dev/null || true
-        # HTMLファイルの生成（簡易版）
+        # HTMLファイルの生成（UTF-8対応）
         mkdir -p export/posts
-        echo '<!DOCTYPE html><html><head><title>HandlessCMS Blog</title></head><body><h1>HandlessCMS Blog</h1><p>Sanity + Next.js + Xserver 自動デプロイ対応ブログサイト</p></body></html>' > export/index.html
+        cat > export/index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandlessCMS Blog</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1 { color: #333; border-bottom: 2px solid #007acc; padding-bottom: 10px; }
+        p { color: #666; line-height: 1.6; }
+        .status { background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>HandlessCMS Blog</h1>
+    <p>Sanity + Next.js + Xserver 自動デプロイ対応ブログサイト</p>
+    <div class="status">
+        <strong>✅ 自動デプロイ成功！</strong><br>
+        GitHub Actions経由でXserverに正常にデプロイされました。
+    </div>
+    <p>現在はメンテナンスページです。本格的なサイト構築をお楽しみに！</p>
+</body>
+</html>
+EOF
         
     # .htaccessファイルをエクスポートディレクトリにコピー
     - name: 📄 Copy .htaccess to export
