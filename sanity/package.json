@@ -1,0 +1,25 @@
+{
+  "name": "sanity",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@portabletext/react": "^3.2.1",
+    "@sanity/types": "^3.95.0",
+    "@sanity/vision": "^3.95.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sanity": "^3.95.0",
+    "styled-components": "^6.1.19"
+  }
+}
