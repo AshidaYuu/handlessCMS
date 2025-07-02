@@ -26,6 +26,7 @@ export async function onRequestPost(context) {
             'Accept': 'application/vnd.github.v3+json',
             'Authorization': `token ${env.GITHUB_TOKEN}`,
             'Content-Type': 'application/json',
+            'User-Agent': 'HandlessCMS-Webhook/1.0',
           },
           body: JSON.stringify({
             event_type: 'sanity-update',
@@ -49,7 +50,13 @@ export async function onRequestPost(context) {
           headers: { 'Content-Type': 'application/json' }
         });
       } else {
-        throw new Error(`GitHub API error: ${githubResponse.status}`);
+        const errorText = await githubResponse.text();
+        console.error('❌ GitHub API エラー:', {
+          status: githubResponse.status,
+          statusText: githubResponse.statusText,
+          body: errorText
+        });
+        throw new Error(`GitHub API error: ${githubResponse.status} - ${errorText}`);
       }
     }
     
