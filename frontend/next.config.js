@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 通常のビルド（SSG用）
-  // output: 'export', // 一時的に無効化
+  // 通常のビルド（ISGに変更予定）
+  // output: 'export', // 静的エクスポートは一旦無効化
   
   // トレイリングスラッシュを追加
   trailingSlash: true,

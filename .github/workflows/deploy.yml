@@ -55,54 +55,19 @@ jobs:
         cd frontend
         NEXT_TELEMETRY_DISABLED=1 npm run build
         
-    # 静的ファイルのエクスポート（Next.js標準ビルド用）
-    - name: 📤 Export static files
-      run: |
-        cd frontend
-        mkdir -p export
-        # 必要な静的ファイルをコピー
-        cp -r .next/static export/
-        cp -r public/* export/ 2>/dev/null || true
-        # HTMLファイルの生成（UTF-8対応）
-        mkdir -p export/posts
-        # 複数行のHTMLファイルを生成
-        echo "<!DOCTYPE html>" > export/index.html
-        echo "<html lang=\"ja\">" >> export/index.html
-        echo "<head>" >> export/index.html
-        echo "    <meta charset=\"UTF-8\">" >> export/index.html
-        echo "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" >> export/index.html
-        echo "    <title>HandlessCMS Blog</title>" >> export/index.html
-        echo "    <style>" >> export/index.html
-        echo "        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }" >> export/index.html
-        echo "        h1 { color: #333; border-bottom: 2px solid #007acc; padding-bottom: 10px; }" >> export/index.html
-        echo "        p { color: #666; line-height: 1.6; }" >> export/index.html
-        echo "        .status { background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 20px 0; }" >> export/index.html
-        echo "    </style>" >> export/index.html
-        echo "</head>" >> export/index.html
-        echo "<body>" >> export/index.html
-        echo "    <h1>HandlessCMS Blog</h1>" >> export/index.html
-        echo "    <p>Sanity + Next.js + Xserver 自動デプロイ対応ブログサイト</p>" >> export/index.html
-        echo "    <div class=\"status\">" >> export/index.html
-        echo "        <strong>✅ 自動デプロイ成功！</strong><br>" >> export/index.html
-        echo "        GitHub Actions経由でXserverに正常にデプロイされました。" >> export/index.html
-        echo "    </div>" >> export/index.html
-        echo "    <p>現在はメンテナンスページです。本格的なサイト構築をお楽しみに！</p>" >> export/index.html
-        echo "</body>" >> export/index.html
-        echo "</html>" >> export/index.html
-        
-    # .htaccessファイルをエクスポートディレクトリにコピー
-    - name: 📄 Copy .htaccess to export
-      run: |
-        cd frontend
-        cp .htaccess export/.htaccess
-        
-    # ビルド成果物のアップロード
+    # ビルド成果物のアップロード（Next.js静的エクスポート）
     - name: 📁 Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: build-files
-        path: frontend/export/
+        path: frontend/out/
         retention-days: 1
+        
+    # .htaccessファイルを出力ディレクトリにコピー
+    - name: 📄 Copy .htaccess to build output
+      run: |
+        cd frontend
+        cp .htaccess out/.htaccess
 
   # デプロイジョブ（mainブランチのみ）
   deploy:
