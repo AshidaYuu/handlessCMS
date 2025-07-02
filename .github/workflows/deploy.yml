@@ -95,6 +95,17 @@ jobs:
         name: build-files
         path: ./build
         
+    # FTPサーバーディレクトリの正規化
+    - name: 🔧 Normalize FTP server directory
+      run: |
+        SERVER_DIR="${{ secrets.FTP_SERVER_DIR }}"
+        # 末尾にスラッシュを追加（なければ）
+        if [[ ! "$SERVER_DIR" =~ /$ ]]; then
+          SERVER_DIR="${SERVER_DIR}/"
+        fi
+        echo "NORMALIZED_SERVER_DIR=${SERVER_DIR}" >> $GITHUB_ENV
+        echo "📁 正規化されたサーバーディレクトリ: ${SERVER_DIR}"
+        
     # FTPでXserverにデプロイ
     - name: 🚀 Deploy to Xserver via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -103,7 +114,7 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./build/
-        server-dir: ${{ secrets.FTP_SERVER_DIR }}
+        server-dir: ${{ env.NORMALIZED_SERVER_DIR }}
         dangerous-clean-slate: false
         exclude: |
           **/.git*
