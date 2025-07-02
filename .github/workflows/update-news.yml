@@ -27,6 +27,8 @@ jobs:
     # リポジトリのチェックアウト
     - name: 📥 Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
       
     # Node.jsのセットアップ
     - name: 🔧 Setup Node.js
@@ -87,7 +89,7 @@ jobs:
         Co-Authored-By: Claude <noreply@anthropic.com>
         EOF
         )"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           echo "✅ 変更をプッシュしました"
         fi
         
