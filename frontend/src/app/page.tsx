@@ -50,9 +50,15 @@ const PostCardFallback = ({ post }: { post: Post }) => (
 
 // 投稿データを取得する関数
 async function getPosts(): Promise<Post[]> {
+  // ビルド時にSanityにアクセスできない場合のフォールバック
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+    console.log('SanityプロジェクトIDが設定されていません。')
+    return []
+  }
+
   try {
     const posts = await client.fetch(allPostsQuery)
-    return posts
+    return posts || []
   } catch (error) {
     console.error('投稿の取得に失敗しました:', error)
     return []

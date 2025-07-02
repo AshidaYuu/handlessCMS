@@ -15,8 +15,17 @@ interface PostPageProps {
 
 // 静的生成用：すべての投稿スラッグを取得
 export async function generateStaticParams() {
+  // ビルド時にSanityにアクセスできない場合のフォールバック
+  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+    console.log('SanityプロジェクトIDが設定されていません。サンプルページを生成します。')
+    return [{ slug: 'sample-post' }]
+  }
+
   try {
     const slugs = await client.fetch(postSlugsQuery)
+    if (!slugs || slugs.length === 0) {
+      return [{ slug: 'sample-post' }]
+    }
     return slugs.map((slug: string) => ({ slug }))
   } catch (error) {
     console.error('スラッグの取得に失敗しました:', error)
