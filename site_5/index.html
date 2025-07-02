@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanauuu - 地方から夢は叶う</title>
+    <meta name="description" content="地方から挑戦する人々の背中を押し、夢を叶える土壌をつくる。大崎の子どもたちと企業、そして地域そのものの未来を共創します。">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    
+    <!-- OGP Meta Tags -->
+    <meta property="og:title" content="Kanauuu - 地方から夢は叶う">
+    <meta property="og:description" content="地方から挑戦する人々の背中を押し、夢を叶える土壌をつくる。大崎の子どもたちと企業、そして地域そのものの未来を共創します。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kanauuu.okigaruweb.com/">
+    <meta property="og:image" content="https://kanauuu.okigaruweb.com/assets/images/ogp-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Kanauuu">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kanauuu - 地方から夢は叶う">
+    <meta name="twitter:description" content="地方から挑戦する人々の背中を押し、夢を叶える土壌をつくる。大崎の子どもたちと企業、そして地域そのものの未来を共創します。">
+    <meta name="twitter:image" content="https://kanauuu.okigaruweb.com/assets/images/ogp-image.png">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="Kanauuu, 大崎, 地方創生, 教育, 学習塾, プログラミング, AI, 地域活性化">
+    <meta name="author" content="合同会社Kanauuu">
+    <link rel="canonical" href="https://kanauuu.okigaruweb.com/">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Sanity Client CDN -->
+    <script src="https://unpkg.com/@sanity/client/dist/sanity.min.js"></script>
+</head>
+<body class="loading">
+    <!-- ローディング画面 -->
+    <div id="loading-screen">
+        <div class="loading-container">
+            <div class="loading-text" data-text="KANAUUU">KANAUUU</div>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
+            <div class="loading-subtitle">地方から夢は叶う</div>
+        </div>
+    </div>
+    <header id="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="Kanauuu">
+                <span class="logo-text">Kanauuu</span>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#about-section">ABOUT<span>私たちについて</span></a></li>
+                    <li><a href="#mission-section">OUR CORE<span>私たちの軸</span></a></li>
+                    <li><a href="#projects-section">PROJECTS<span>プロジェクト</span></a></li>
+                    <li><a href="#news-section">NEWS<span>お知らせ</span></a></li>
+                    <li><a href="#team-section">OUR TEAM<span>私たちのチーム</span></a></li>
+                    <li><a href="#contact-section">CONTACT<span>お問い合わせ</span></a></li>
+                </ul>
+            </nav>
+            
+            <!-- ハンバーガーメニューボタン -->
+            <button class="hamburger-menu" aria-label="メニューを開く">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- モバイルメニューオーバーレイ -->
+            <div class="mobile-menu-overlay">
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="#about-section">ABOUT<span>私たちについて</span></a></li>
+                        <li><a href="#mission-section">OUR CORE<span>私たちの軸</span></a></li>
+                        <li><a href="#projects-section">PROJECTS<span>プロジェクト</span></a></li>
+                        <li><a href="#news-section">NEWS<span>お知らせ</span></a></li>
+                        <li><a href="#team-section">OUR TEAM<span>私たちのチーム</span></a></li>
+                        <li><a href="#contact-section">CONTACT<span>お問い合わせ</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="header-contact">
+                <a href="#contact-section" class="contact-btn">
+                    <span class="btn-text">CONTACT</span>
+                    <span class="btn-subtext">お問い合わせ</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="main-visual">
+        <div class="mv-background-slider">
+            <div class="mv-slide active" data-bg="assets/images/mv-slideimg1.jpg"></div>
+            <div class="mv-slide" data-bg="assets/images/mv-slideimg2.jpg"></div>
+            <div class="mv-slide" data-bg="assets/images/mv-slideimg3.jpg"></div>
+            <div class="mv-slide" data-bg="assets/images/mv-slideimg4.jpg"></div>
+            <div class="mv-slide" data-bg="assets/images/mv-slideimg5.jpg"></div>
+        </div>
+        
+        <div class="mv-overlay"></div>
+        
+        <div class="mv-container">
+            <div class="mv-content">
+                <h1 class="mv-title">
+                    <span class="main-text" data-text="地方から夢は叶う">地方から夢は叶う</span>
+                    <div class="title-with-progress">
+                        <span class="sub-text" data-text="KANAUUU">KANAUUU</span>
+                        <!-- プログレスバー（横型） -->
+                        <div class="slide-progress-line horizontal">
+                            <div class="slide-progress-bar"></div>
+                        </div>
+                    </div>
+                </h1>
+                <div class="mv-description">
+                    <p class="description" data-text="地方から挑戦する人々の背中を押し、夢を叶える土壌をつくる">地方から挑戦する人々の背中を押し、<br>夢を叶える土壌をつくる</p>
+                    <p class="mv-mission" data-text="大崎の子どもたちと企業、そして地域そのものの未来を共創します">大崎の子どもたちと企業、そして地域そのものの未来を共創します</p>
+                    
+                    <!-- ドット（横型） -->
+                    <div class="slide-dots horizontal">
+                        <div class="slide-dot active" data-slide="0"></div>
+                        <div class="slide-dot" data-slide="1"></div>
+                        <div class="slide-dot" data-slide="2"></div>
+                        <div class="slide-dot" data-slide="3"></div>
+                        <div class="slide-dot" data-slide="4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+        </div>
+    </section>
+
+    <section id="about-section">
+        <div class="about-container">
+            <div class="about-header">
+                <span class="section-label">ABOUT</span>
+                <span class="section-subtitle">私たちについて</span>
+            </div>
+            
+            <div class="about-content">
+                <!-- 大きなタイトル（スクロール連動） -->
+                <div class="about-main-title" data-scroll-reveal>
+                    <h2 class="large-title">
+                        <span class="title-line">大崎から未来をつくる、</span><br>
+                        <span class="title-line title-highlight">挑戦のエコシステム</span>
+                    </h2>
+                </div>
+                
+                <!-- 説明文 -->
+                <div class="about-description-section" data-scroll-reveal>
+                    <p class="about-description">子どもも大人も、どこにいても最新の学びとテクノロジーにアクセスできる社会。教育現場・企業・クリエイターがつながり、アイデアが循環する場所。私たちは地方から新しい価値を生み出し続けます。
+                    </p>
+                </div>
+                
+                <!-- 円形MISSION/VISION/VALUE -->
+                <div class="about-circles-section" data-scroll-reveal>
+                    <div class="circles-container">
+                        <div class="circle-item mission-circle">
+                            <div class="circle-content">
+                                <h3>MISSION</h3>
+                                <p>挑戦する人の背中を押し、<br>夢を叶える土壌をつくる</p>
+                            </div>
+                        </div>
+                        <div class="circle-item vision-circle">
+                            <div class="circle-content">
+                                <h3>VISION</h3>
+                                <p>地方発イノベーションの<br>交差点になる</p>
+                            </div>
+                        </div>
+                        <div class="circle-item value-circle">
+                            <div class="circle-content">
+                                <h3>VALUE</h3>
+                                <p>Warm<br>Future<br>Local Pride</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-cta" data-scroll-reveal>
+                    <a href="#" class="view-more-btn" onclick="return false;">
+                        <span>COMING SOON</span>
+                        <div class="btn-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mission-section">
+        <div class="mission-container">
+            <div class="section-header">
+                <span class="section-label">OUR CORE</span>
+                <span class="section-subtitle">私たちの軸</span>
+            </div>
+            
+            <div class="mission-content-wrapper">
+                <div class="mission-visual">
+                    <div class="mission-images">
+                        <div class="mission-image mission-img-1 active" data-category="mission">
+                            <div class="image-placeholder mission-bg"></div>
+                        </div>
+                        <div class="mission-image mission-img-2" data-category="vision">
+                            <div class="image-placeholder vision-bg"></div>
+                        </div>
+                        <div class="mission-image mission-img-3" data-category="value">
+                            <div class="image-placeholder value-bg"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mission-details">
+                    <div class="mission-item active" data-category="mission">
+                        <div class="item-header">
+                            <div class="item-header-content">
+                                <h3>MISSION</h3>
+                                <div class="mobile-mini-image mission-bg"></div>
+                            </div>
+                            <div class="expand-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4>「挑戦する人の背中を押し、夢を叶える土壌をつくる」</h4>
+                            <p>子どもも大人も、どこにいても、最新の学びとテクノロジーにアクセスできる社会を大崎から広げます。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mission-item" data-category="vision">
+                        <div class="item-header">
+                            <div class="item-header-content">
+                                <h3>VISION</h3>
+                                <div class="mobile-mini-image vision-bg"></div>
+                            </div>
+                            <div class="expand-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4>「地方発イノベーションの交差点になる」</h4>
+                            <p>教育現場・企業・クリエイターがつながり、アイデアが循環する"挑戦のエコシステム"を育みます。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mission-item" data-category="value">
+                        <div class="item-header">
+                            <div class="item-header-content">
+                                <h3>VALUE</h3>
+                                <div class="mobile-mini-image value-bg"></div>
+                            </div>
+                            <div class="expand-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h4>「Warm - Future - Local Pride」</h4>
+                            <div class="value-simple">
+                                <p><strong>1) 伴走者として寄り添う温かさ</strong></p>
+                                <p><strong>2) 常に一歩先を取り入れる未来志向</strong></p>
+                                <p><strong>3) 故郷を誇り、地域と共に歩む姿勢</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="view-more-section">
+                        <a href="#" class="view-more-btn-alt" onclick="return false;">
+                            <span>COMING SOON</span>
+                            <div class="btn-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects-section">
+        <div class="projects-container">
+            <div class="projects-header">
+                <div class="section-header">
+                    <span class="section-label">PROJECTS</span>
+                    <span class="section-subtitle">プロジェクト</span>
+                </div>
+                
+                <div class="projects-description">
+                    <p>地方から生まれる新しい価値創造。教育・技術・地域をつなぎ、<br>大崎から未来を切り拓く5つの挑戦をご紹介します。</p>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="nav-btn prev-btn" aria-label="前へ">←</button>
+                    <button class="nav-btn next-btn" aria-label="次へ">→</button>
+                </div>
+            </div>
+            
+            <div class="projects-gallery">
+                <div class="gallery-track">
+                    <!-- 学習塾 -->
+                    <div class="project-card card-1">
+                        <div class="card-image">
+                            <div class="card-text-content">
+                                <div class="main-heading">学習塾</div>
+                            </div>
+                            <div class="sub-heading">Learning</div>
+                            <div class="bottom-caption">AIが一人ひとりの弱点を分析し、最短ルートで"わかった！"へ導きます。</div>
+                            <div class="card-button">
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- プログラミングスクール -->
+                    <div class="project-card card-2">
+                        <div class="card-image">
+                            <div class="card-text-content">
+                                <div class="main-heading">プログラミングスクール</div>
+                            </div>
+                            <div class="sub-heading">Programming</div>
+                            <div class="bottom-caption">マインクラフトの世界で「遊び」ながら論理的思考と創造力を育成。</div>
+                            <div class="card-button">
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ピアノ教室 -->
+                    <div class="project-card card-3">
+                        <div class="card-image">
+                            <div class="card-text-content">
+                                <div class="main-heading">ピアノ教室</div>
+                            </div>
+                            <div class="sub-heading">Piano</div>
+                            <div class="bottom-caption">小学生中心。音楽で培う表現力が、学びへの自信を育みます。</div>
+                            <div class="card-button">
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Web制作・SNS運用 -->
+                    <div class="project-card card-4">
+                        <div class="card-image">
+                            <div class="card-text-content">
+                                <div class="main-heading">Web制作・SNS運用</div>
+                            </div>
+                            <div class="sub-heading">Digital</div>
+                            <div class="bottom-caption">製作費0円、月9,000円から。地元企業の"顔"をアップデートし、ファンが集まるブランドへ。</div>
+                            <div class="card-button">
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI・NANDE -->
+                    <div class="project-card card-5">
+                        <div class="card-image">
+                            <div class="card-text-content">
+                                <div class="main-heading">AI・NANDE</div>
+                            </div>
+                            <div class="sub-heading">Medical AI</div>
+                            <div class="bottom-caption">地方発・看護領域特化AIアプリ 現場の声から生まれた実用機能で、忙しい医療スタッフの判断を支援します</div>
+                            <div class="card-button">
+                                <span>→</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="projects-cta">
+                <a href="#" class="view-more-btn" onclick="return false;">
+                    <span>COMING SOON</span>
+                    <div class="btn-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="news-section">
+        <div class="news-container">
+            <div class="news-layout">
+                <div class="news-left">
+                    <div class="section-header">
+                        <span class="section-label">NEWS</span>
+                        <span class="section-subtitle">お知らせ</span>
+                    </div>
+                    
+                    <div class="news-description">
+                        <p>地域とともに歩む最新の取り組みや成果、<br>イベント情報をお伝えします。</p>
+                    </div>
+                    
+                    <a href="news/index.html" class="view-more-btn news-view-all">
+                        <span>VIEW ALL</span>
+                        <div class="btn-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="news-right">
+                    <div class="news-list" id="news-list">
+                        <!-- ローディング表示 -->
+                        <div class="news-loading" id="news-loading">
+                            <p>ニュースを読み込み中...</p>
+                        </div>
+                        
+                        <!-- Sanityからのデータで動的に生成される -->
+                        <!-- フォールバック用の静的ニュース（Sanity接続エラー時に表示） -->
+                        <div class="news-fallback" id="news-fallback" style="display: none;">
+                            <article class="news-item">
+                                <time class="news-date">2025.6.06</time>
+                                <h3 class="news-title-item">地域向け1Dayプログラミング体験会を開催しました</h3>
+                            </article>
+                            
+                            <article class="news-item">
+                                <time class="news-date">2025.4.25</time>
+                                <h3 class="news-title-item">ゴールデンウィーク期間中の休業日について</h3>
+                            </article>
+                            
+                            <article class="news-item">
+                                <time class="news-date">2025.4.16</time>
+                                <h3 class="news-title-item">看護AI「NANDE」β版リリース記念セミナー開催について</h3>
+                            </article>
+                            
+                            <article class="news-item">
+                                <time class="news-date">2025.4.10</time>
+                                <h3 class="news-title-item">地域企業のWebブランディング支援プロジェクト始動</h3>
+                            </article>
+                        </div>
+                    </div>
+                    
+                    <a href="news/index.html" class="view-more-btn news-view-all-mobile">
+                        <span>VIEW ALL</span>
+                        <div class="btn-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team-section">
+        <div class="team-bg-animation">
+            <object class="osaki-outline" data="assets/images/osaki_outline_single.svg" type="image/svg+xml" id="osaki-svg-object"></object>
+        </div>
+        <div class="team-container">
+            <div class="team-content">
+                <div class="team-info">
+                    <div class="section-header">
+                        <span class="section-label">OUR TEAM</span>
+                        <span class="section-subtitle">私たちのチーム</span>
+                    </div>
+                    
+                    <div class="team-description">
+                        <h3 class="team-title">「地方だからこそ、やる価値がある。」</h3>
+                        <p>東日本大震災後に立ち上げたボランティア塾が、Kanauuu の原点。教育者・エンジニア・クリエイターの多彩なチームが、今日も大崎から世界へ挑みます。</p>
+                    </div>
+                    
+                    <a href="#" class="view-more-btn team-view-more" onclick="return false;">
+                        <span>COMING SOON</span>
+                        <div class="btn-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="team-gallery">
+                <div class="gallery-row gallery-row-left">
+                    <div class="team-image">
+                        <img src="assets/images/team-img3.jpeg" alt="Team member 1">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img4.jpeg" alt="Team member 2">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img1.JPG" alt="Team member 3">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img5.jpeg" alt="Team member 4">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img2.JPG" alt="Team member 5">
+                    </div>
+                    <!-- 複製用 -->
+                    <div class="team-image">
+                        <img src="assets/images/team-img6.jpeg" alt="Team member 1">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img7.jpeg" alt="Team member 2">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img8.jpeg" alt="Team member 3">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img9.jpeg" alt="Team member 4">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img10.jpeg" alt="Team member 5">
+                    </div>
+                </div>
+                
+                <div class="gallery-row gallery-row-right">
+                    
+                    <!-- 複製用 -->
+                    <div class="team-image">
+                        <img src="assets/images/team-img6.jpeg" alt="Team member 1">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img7.jpeg" alt="Team member 2">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img8.jpeg" alt="Team member 3">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img9.jpeg" alt="Team member 4">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img10.jpeg" alt="Team member 5">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img3.jpeg" alt="Team member 1">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img4.jpeg" alt="Team member 2">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img1.JPG" alt="Team member 3">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img5.jpeg" alt="Team member 4">
+                    </div>
+                    <div class="team-image">
+                        <img src="assets/images/team-img2.JPG" alt="Team member 5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact-section">
+        <div class="contact-container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="section-header">
+                        <span class="section-label contact-label">CONTACT</span>
+                        <span class="section-subtitle contact-subtitle">お問い合わせ</span>
+                    </div>
+                    
+                    <div class="contact-description">
+                        <p>私たちへのご質問、お仕事に関するご相談は、お気軽にお問い合わせページよりお気軽にご連絡ください。</p>
+                    </div>
+                </div>
+                
+                <div class="contact-button-wrapper">
+                    <a href="#" class="contact-circle-btn">
+                        <span class="contact-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="footer-logo">
+                        <h2 class="footer-brand">KANAUUU</h2>
+                        <p class="footer-company">合同会社Kanauuu</p>
+                    </div>
+                </div>
+                
+                <div class="footer-right">
+                    <div class="footer-nav">
+                        <div class="footer-nav-column">
+                            <ul>
+                                <li><a href="#">TOP<span class="divider"></span><span>トップ</span></a></li>
+                                <li><a href="#about-section">ABOUT<span class="divider"></span><span>私たちについて</span></a></li>
+                                <li><a href="#mission-section">OUR CORE<span class="divider"></span><span>私たちの軸</span></a></li>
+                                <li><a href="#projects-section">PROJECTS<span class="divider"></span><span>プロジェクト</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-nav-column">
+                            <ul>
+                                <li><a href="#news-section">NEWS<span class="divider"></span><span>お知らせ</span></a></li>
+                                <li><a href="#team-section">OUR TEAM<span class="divider"></span><span>私たちのチーム</span></a></li>
+                                <li><a href="#contact-section">CONTACT<span class="divider"></span><span>お問い合わせ</span></a></li>
+                                <li><a href="#">PRIVACY<span class="divider"></span><span>個人情報保護方針</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="footer-copyright">©Kanauuu Co., Ltd.</p>
+                    <a href="#" class="footer-privacy">個人情報保護方針</a>
+                </div>
+                <div class="footer-url">
+                    <span>https://www.kanauuu.com</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

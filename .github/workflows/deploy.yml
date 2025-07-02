@@ -49,25 +49,37 @@ jobs:
         echo "SANITY_API_READ_TOKEN=${{ secrets.SANITY_API_READ_TOKEN }}" >> .env.local
         echo "SANITY_PREVIEW_SECRET=${{ secrets.SANITY_PREVIEW_SECRET }}" >> .env.local
         
-    # Next.jsアプリケーションのビルド
-    - name: 🏗️ Build Next.js application
+    # Site_5ファイルの準備（Sanity連携対応）
+    - name: 🏗️ Prepare site_5 for deployment
       run: |
-        cd frontend
-        NEXT_TELEMETRY_DISABLED=1 npm run build
+        echo "📂 Sanity連携サイト（site_5）をデプロイ準備中..."
         
-    # ビルド成果物のアップロード（Next.js静的エクスポート）
-    - name: 📁 Upload build artifacts
+        # site_5ディレクトリが存在することを確認
+        if [ -d "site_5" ]; then
+          echo "✅ site_5ディレクトリが見つかりました"
+          ls -la site_5/
+        else
+          echo "❌ site_5ディレクトリが見つかりません"
+          exit 1
+        fi
+        
+    # ビルド成果物のアップロード（site_5静的ファイル）
+    - name: 📁 Upload site_5 files
       uses: actions/upload-artifact@v4
       with:
         name: build-files
-        path: frontend/out/
+        path: site_5/
         retention-days: 1
         
-    # .htaccessファイルを出力ディレクトリにコピー
-    - name: 📄 Copy .htaccess to build output
+    # .htaccessファイルをsite_5にコピー（パフォーマンス最適化用）
+    - name: 📄 Copy .htaccess to site_5
       run: |
-        cd frontend
-        cp .htaccess out/.htaccess
+        if [ -f "frontend/.htaccess" ]; then
+          cp frontend/.htaccess site_5/.htaccess
+          echo "✅ .htaccessファイルをsite_5にコピーしました"
+        else
+          echo "⚠️ .htaccessファイルが見つかりません"
+        fi
 
   # デプロイジョブ（mainブランチのみ）
   deploy:
@@ -125,10 +137,18 @@ jobs:
     - name: 📧 Notify deployment success
       if: success()
       run: |
-        echo "🎉 デプロイが成功しました！"
+        echo "🎉 Sanity連携サイト（site_5）のデプロイが成功しました！"
         echo "📅 デプロイ時刻: $(date)"
         echo "🌐 サイトURL: https://yourdomain.com"
-        echo "📊 ビルドファイル数: $(find ./build -type f | wc -l)"
+        echo "📊 デプロイファイル数: $(find ./build -type f | wc -l)"
+        echo ""
+        echo "✨ 新機能："
+        echo "  🔗 Sanity CMS連携対応"
+        echo "  📰 NEWSセクションの動的更新"
+        echo "  ⚡ パフォーマンス最適化済み"
+        echo ""
+        echo "🔧 Sanity Studio: http://localhost:3333"
+        echo "📝 投稿を追加すると自動でサイトに反映されます"
         
     # デプロイ失敗通知とトラブルシューティング
     - name: ❌ Notify deployment failure
