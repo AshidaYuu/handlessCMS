@@ -34,6 +34,11 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: process.env.NODE_ENV === 'production',
   },
+  
+  // Next.js 15での静的エクスポート互換性
+  experimental: {
+    serverActions: false,
+  },
 }
 
 module.exports = nextConfig
