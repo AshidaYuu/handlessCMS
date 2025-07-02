@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanity接続テスト</title>
-    <script src="https://unpkg.com/@sanity/client/dist/sanity.min.js"></script>
 </head>
 <body>
-    <h1>Sanity CMS接続テスト</h1>
+    <h1>Sanity CMS接続テスト（ネイティブfetch版）</h1>
     
     <div id="status">テスト中...</div>
     <div id="data"></div>
@@ -23,26 +22,36 @@
         
         console.log('Sanity Config:', sanityConfig);
         
+        // ネイティブfetch APIを使用してSanityに直接アクセス
+        async function fetchFromSanity(query) {
+            const url = `https://${sanityConfig.projectId}.api.sanity.io/v${sanityConfig.apiVersion}/data/query/${sanityConfig.dataset}`;
+            const encodedQuery = encodeURIComponent(query);
+            
+            console.log('📡 URL:', `${url}?query=${encodedQuery}`);
+            
+            const response = await fetch(`${url}?query=${encodedQuery}`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            return data.result;
+        }
+        
         // テスト実行
         async function testSanityConnection() {
             const statusEl = document.getElementById('status');
             const dataEl = document.getElementById('data');
             
             try {
-                statusEl.innerHTML = '🔍 Sanityクライアントを初期化中...';
-                
-                if (!window.sanityClient) {
-                    throw new Error('Sanityクライアントが読み込まれていません');
-                }
-                
-                const client = window.sanityClient(sanityConfig);
-                statusEl.innerHTML = '📡 Sanityに接続中...';
+                statusEl.innerHTML = '📡 Sanity APIに直接接続中...';
                 
                 // シンプルなクエリでテスト
                 const query = '*[_type == "post"]{title, publishedAt, _id}';
                 console.log('Query:', query);
                 
-                const posts = await client.fetch(query);
+                const posts = await fetchFromSanity(query);
                 console.log('Posts:', posts);
                 
                 statusEl.innerHTML = `✅ 接続成功！投稿数: ${posts.length}`;

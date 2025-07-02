@@ -6,18 +6,25 @@ const sanityConfig = {
     useCdn: true
 };
 
-// Sanityクライアントの初期化（CDNの読み込み待ち）
-let sanityClient = null;
-
-// CDNからのSanityクライアント読み込み完了を待つ
-function initializeSanityClient() {
-    if (window.sanityClient) {
-        sanityClient = window.sanityClient(sanityConfig);
-        console.log('✅ Sanityクライアントが初期化されました');
-        return true;
-    } else {
-        console.warn('⚠️ Sanityクライアントが読み込まれていません');
-        return false;
+// ネイティブfetch APIを使用してSanityに直接アクセス
+async function fetchFromSanity(query) {
+    const url = `https://${sanityConfig.projectId}.api.sanity.io/v${sanityConfig.apiVersion}/data/query/${sanityConfig.dataset}`;
+    const encodedQuery = encodeURIComponent(query);
+    
+    try {
+        console.log('🔍 Sanity APIにクエリ送信中:', query);
+        const response = await fetch(`${url}?query=${encodedQuery}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('✅ Sanity APIからデータ取得成功:', data);
+        return data.result;
+    } catch (error) {
+        console.error('❌ Sanity API エラー:', error);
+        throw error;
     }
 }
 
@@ -26,13 +33,6 @@ async function loadNewsFromSanity() {
     const newsListEl = document.getElementById('news-list');
     const newsLoadingEl = document.getElementById('news-loading');
     const newsFallbackEl = document.getElementById('news-fallback');
-    
-    // Sanityクライアントを初期化
-    if (!initializeSanityClient()) {
-        console.warn('Sanity client not available, showing fallback news');
-        showFallbackNews();
-        return;
-    }
     
     try {
         // Sanityからニュース（投稿）データを取得
@@ -43,16 +43,18 @@ async function loadNewsFromSanity() {
             excerpt
         }`;
         
-        const posts = await sanityClient.fetch(query);
+        console.log('📡 Sanityからデータを取得中...');
+        const posts = await fetchFromSanity(query);
         
         if (posts && posts.length > 0) {
+            console.log(`✅ ${posts.length}件の投稿を取得しました`);
             displayNews(posts);
         } else {
-            console.warn('No posts found, showing fallback news');
+            console.warn('⚠️ 投稿が見つかりませんでした、フォールバック表示します');
             showFallbackNews();
         }
     } catch (error) {
-        console.error('Sanity fetch error:', error);
+        console.error('❌ Sanity取得エラー:', error);
         showFallbackNews();
     }
 }
@@ -99,11 +101,9 @@ function showFallbackNews() {
 
 // ローディングとマウスストーカー
 document.addEventListener('DOMContentLoaded', function() {
-    // Sanityクライアントの読み込みを少し遅延させる
-    setTimeout(() => {
-        console.log('🔄 Sanityクライアントの初期化を試行中...');
-        loadNewsFromSanity();
-    }, 1000); // 1秒待機してからSanity読み込み
+    // Sanityからニュースを読み込み（ネイティブfetch使用）
+    console.log('🔄 Sanity API経由でニュースを読み込み中...');
+    loadNewsFromSanity();
     // ローディングアニメーション制御
     const loadingScreen = document.getElementById('loading-screen');
     const body = document.body;

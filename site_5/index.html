@@ -42,25 +42,8 @@
     <!-- GSAP CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- Sanity Client CDN -->
-    <script src="https://unpkg.com/@sanity/client/dist/sanity.min.js"></script>
 </head>
 <body class="loading">
-    <!-- Sanity読み込み確認用スクリプト -->
-    <script>
-        // Sanityクライアントの読み込み確認
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.sanityClient) {
-                console.log('✅ Sanityクライアント読み込み成功');
-            } else {
-                console.error('❌ Sanityクライアント読み込み失敗');
-                // 代替CDNを試行
-                const fallbackScript = document.createElement('script');
-                fallbackScript.src = 'https://cdn.jsdelivr.net/npm/@sanity/client@latest/dist/sanity.min.js';
-                document.head.appendChild(fallbackScript);
-            }
-        });
-    </script>
     <!-- ローディング画面 -->
     <div id="loading-screen">
         <div class="loading-container">
