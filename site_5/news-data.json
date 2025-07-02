@@ -1,0 +1,34 @@
+[
+  {
+    "title": "HandlessCMS + site_5連携テスト投稿",
+    "publishedAt": "2025-01-02T10:00:00Z",
+    "slug": {
+      "current": "handlesscms-site5-test-post"
+    },
+    "excerpt": "Sanity CMSとsite_5サイトの連携テストを実施しています。"
+  },
+  {
+    "title": "地域向け1Dayプログラミング体験会を開催しました",
+    "publishedAt": "2025-06-06T10:00:00Z",
+    "slug": {
+      "current": "programming-workshop-2025"
+    },
+    "excerpt": "大崎市内の小中学生を対象としたプログラミング体験会を開催いたしました。"
+  },
+  {
+    "title": "ゴールデンウィーク期間中の休業日について",
+    "publishedAt": "2025-04-25T10:00:00Z",
+    "slug": {
+      "current": "golden-week-holiday"
+    },
+    "excerpt": "ゴールデンウィーク期間中の営業についてお知らせいたします。"
+  },
+  {
+    "title": "看護AI「NANDE」β版リリース記念セミナー開催について",
+    "publishedAt": "2025-04-16T10:00:00Z",
+    "slug": {
+      "current": "nande-beta-seminar"
+    },
+    "excerpt": "地方発・看護領域特化AIアプリのβ版リリースを記念したセミナーを開催します。"
+  }
+]

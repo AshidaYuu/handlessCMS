@@ -6,24 +6,22 @@ const sanityConfig = {
     useCdn: true
 };
 
-// ネイティブfetch APIを使用してSanityに直接アクセス
-async function fetchFromSanity(query) {
-    const url = `https://${sanityConfig.projectId}.api.sanity.io/v${sanityConfig.apiVersion}/data/query/${sanityConfig.dataset}`;
-    const encodedQuery = encodeURIComponent(query);
-    
+// 静的JSONファイルからデータを取得（CORS回避）
+async function fetchFromSanityCDN(query) {
     try {
-        console.log('🔍 Sanity APIにクエリ送信中:', query);
-        const response = await fetch(`${url}?query=${encodedQuery}`);
+        // 事前生成されたJSONファイルを読み込み
+        console.log('🔍 静的JSONファイルからデータを取得中...');
+        const response = await fetch('./news-data.json');
         
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            throw new Error('静的ファイルの読み込みに失敗');
         }
         
         const data = await response.json();
-        console.log('✅ Sanity APIからデータ取得成功:', data);
-        return data.result;
+        console.log('✅ 静的JSONデータ取得成功:', data);
+        return data;
     } catch (error) {
-        console.error('❌ Sanity API エラー:', error);
+        console.error('❌ 静的JSON取得エラー:', error);
         throw error;
     }
 }
@@ -43,8 +41,8 @@ async function loadNewsFromSanity() {
             excerpt
         }`;
         
-        console.log('📡 Sanityからデータを取得中...');
-        const posts = await fetchFromSanity(query);
+        console.log('📡 Sanity CDN経由でデータを取得中...');
+        const posts = await fetchFromSanityCDN(query);
         
         if (posts && posts.length > 0) {
             console.log(`✅ ${posts.length}件の投稿を取得しました`);
