@@ -78,7 +78,7 @@ export default async function Home() {
             HandlessCMS Blog
           </h1>
           <p className="text-gray-600 mt-2">
-            Sanity + Next.jsで作ったブログサイト
+            Sanity + Next.js + Xserver 自動デプロイ対応ブログサイト
           </p>
         </div>
       </header>
