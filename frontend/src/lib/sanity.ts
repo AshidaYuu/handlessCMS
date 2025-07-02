@@ -8,11 +8,11 @@ import imageUrlBuilder from '@sanity/image-url'
 
 // Sanityクライアントの設定
 export const client = createClient({
-  // プロジェクトID（環境変数から取得）
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  // データセット名（環境変数から取得）
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  // APIバージョン（環境変数から取得）
+  // プロジェクトID（環境変数から取得、デフォルト値付き）
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rt90f87e',
+  // データセット名（環境変数から取得、デフォルト値付き）
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  // APIバージョン（環境変数から取得、デフォルト値付き）
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
   // CDNを使用するかどうか（本番環境ではtrue推奨）
   useCdn: process.env.NODE_ENV === 'production',
@@ -34,8 +34,8 @@ export function urlFor(source: any) {
 
 // プレビュー用のクライアント設定
 export const previewClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rt90f87e',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
   // プレビューモードではCDNを使用しない
   useCdn: false,
