@@ -203,6 +203,10 @@ cd sanity && npm run deploy
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 
+## 🔄 更新履歴
+
+- 2025-01-02: 初回リリース、GitHub Actions設定完了
+
 ---
 
 初心者の方でも、この手順に従えば確実にセットアップできます。
