@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 静的エクスポートの設定（一時的に無効化してテスト）
-  // output: 'export',
-  // distDir: 'out',
+  // 静的エクスポートの設定（本番環境用）
+  output: 'export',
+  distDir: 'out',
   
   // トレイリングスラッシュを追加
   trailingSlash: true,
