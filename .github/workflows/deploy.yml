@@ -65,8 +65,7 @@ jobs:
         cp -r public/* export/ 2>/dev/null || true
         # HTMLファイルの生成（UTF-8対応）
         mkdir -p export/posts
-        cat > export/index.html << 'EOF'
-<!DOCTYPE html>
+        echo '<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -88,8 +87,7 @@ jobs:
     </div>
     <p>現在はメンテナンスページです。本格的なサイト構築をお楽しみに！</p>
 </body>
-</html>
-EOF
+</html>' > export/index.html
         
     # .htaccessファイルをエクスポートディレクトリにコピー
     - name: 📄 Copy .htaccess to export
