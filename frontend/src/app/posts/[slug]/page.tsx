@@ -5,12 +5,24 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { client } from '@/lib/sanity'
-import { postBySlugQuery } from '@/lib/queries'
+import { postBySlugQuery, postSlugsQuery } from '@/lib/queries'
 
 interface PostPageProps {
   params: Promise<{
     slug: string
   }>
+}
+
+// 静的生成用：すべての投稿スラッグを取得
+export async function generateStaticParams() {
+  try {
+    const slugs = await client.fetch(postSlugsQuery)
+    return slugs.map((slug: string) => ({ slug }))
+  } catch (error) {
+    console.error('スラッグの取得に失敗しました:', error)
+    // エラー時はサンプルのスラッグを返す（ビルドエラーを回避）
+    return [{ slug: 'sample-post' }]
+  }
 }
 
 // 特定のスラッグの投稿を取得
