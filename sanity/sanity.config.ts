@@ -15,9 +15,8 @@ export default defineConfig({
   title: 'handlessCMS',
 
   // プロジェクトIDとデータセット名
-  // これらは後で環境変数から読み込むように変更します
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'your-project-id',
-  dataset: process.env.SANITY_STUDIO_DATASET || 'production',
+  projectId: 'rt90f87e',
+  dataset: 'production',
 
   // Sanity Studioで使用するプラグイン
   plugins: [
