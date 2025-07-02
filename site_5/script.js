@@ -6,8 +6,20 @@ const sanityConfig = {
     useCdn: true
 };
 
-// Sanityクライアントの初期化
-const sanityClient = window.sanityClient ? window.sanityClient(sanityConfig) : null;
+// Sanityクライアントの初期化（CDNの読み込み待ち）
+let sanityClient = null;
+
+// CDNからのSanityクライアント読み込み完了を待つ
+function initializeSanityClient() {
+    if (window.sanityClient) {
+        sanityClient = window.sanityClient(sanityConfig);
+        console.log('✅ Sanityクライアントが初期化されました');
+        return true;
+    } else {
+        console.warn('⚠️ Sanityクライアントが読み込まれていません');
+        return false;
+    }
+}
 
 // ニュースデータを取得してUIに反映
 async function loadNewsFromSanity() {
@@ -15,7 +27,8 @@ async function loadNewsFromSanity() {
     const newsLoadingEl = document.getElementById('news-loading');
     const newsFallbackEl = document.getElementById('news-fallback');
     
-    if (!sanityClient) {
+    // Sanityクライアントを初期化
+    if (!initializeSanityClient()) {
         console.warn('Sanity client not available, showing fallback news');
         showFallbackNews();
         return;
@@ -86,8 +99,11 @@ function showFallbackNews() {
 
 // ローディングとマウスストーカー
 document.addEventListener('DOMContentLoaded', function() {
-    // Sanityからニュースを読み込み
-    loadNewsFromSanity();
+    // Sanityクライアントの読み込みを少し遅延させる
+    setTimeout(() => {
+        console.log('🔄 Sanityクライアントの初期化を試行中...');
+        loadNewsFromSanity();
+    }, 1000); // 1秒待機してからSanity読み込み
     // ローディングアニメーション制御
     const loadingScreen = document.getElementById('loading-screen');
     const body = document.body;
