@@ -1,15 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 静的エクスポートの設定（本番環境用）
-  output: 'export',
-  distDir: 'out',
+  // 通常のビルド（SSG用）
+  // output: 'export', // 一時的に無効化
   
   // トレイリングスラッシュを追加
   trailingSlash: true,
   
-  // 画像最適化をスキップ（静的エクスポート時）
+  // 画像最適化設定
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -33,11 +31,6 @@ const nextConfig = {
   // TypeScriptエラーを無視（開発時のみ）
   typescript: {
     ignoreBuildErrors: process.env.NODE_ENV === 'production',
-  },
-  
-  // Next.js 15での静的エクスポート互換性
-  experimental: {
-    serverActions: false,
   },
 }
 

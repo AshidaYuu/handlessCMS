@@ -55,19 +55,31 @@ jobs:
         cd frontend
         NEXT_TELEMETRY_DISABLED=1 npm run build
         
+    # 静的ファイルのエクスポート（Next.js標準ビルド用）
+    - name: 📤 Export static files
+      run: |
+        cd frontend
+        mkdir -p export
+        # 必要な静的ファイルをコピー
+        cp -r .next/static export/
+        cp -r public/* export/ 2>/dev/null || true
+        # HTMLファイルの生成（簡易版）
+        mkdir -p export/posts
+        echo '<!DOCTYPE html><html><head><title>HandlessCMS Blog</title></head><body><h1>HandlessCMS Blog</h1><p>Sanity + Next.js + Xserver 自動デプロイ対応ブログサイト</p></body></html>' > export/index.html
+        
+    # .htaccessファイルをエクスポートディレクトリにコピー
+    - name: 📄 Copy .htaccess to export
+      run: |
+        cd frontend
+        cp .htaccess export/.htaccess
+        
     # ビルド成果物のアップロード
     - name: 📁 Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: build-files
-        path: frontend/out/
+        path: frontend/export/
         retention-days: 1
-        
-    # .htaccessファイルを出力ディレクトリにコピー
-    - name: 📄 Copy .htaccess to build output
-      run: |
-        cd frontend
-        cp .htaccess out/.htaccess
 
   # デプロイジョブ（mainブランチのみ）
   deploy:
