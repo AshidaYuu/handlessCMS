@@ -71,11 +71,16 @@ function displayNews(posts) {
     const newsHTML = posts.map(post => {
         const date = new Date(post.publishedAt);
         const formattedDate = `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`;
+        const slug = post.slug ? post.slug.current : '';
         
         return `
             <article class="news-item">
                 <time class="news-date">${formattedDate}</time>
-                <h3 class="news-title-item">${post.title}</h3>
+                <h3 class="news-title-item">
+                    <a href="news-detail.html?slug=${encodeURIComponent(slug)}" class="news-title-link">
+                        ${post.title}
+                    </a>
+                </h3>
             </article>
         `;
     }).join('');
