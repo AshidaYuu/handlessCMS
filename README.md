@@ -147,6 +147,8 @@ npm run deploy
 ### 開発・カスタマイズ
 - [🎨 Frontend Development Guide](docs/frontend-development-guide.md): フロントエンド修正の完全ガイド
 - [⚡ Quick Edit Reference](docs/quick-edit-reference.md): 修正のクイックリファレンス
+- [🚀 Git Workflow Guide](docs/git-workflow-guide.md): Git操作の完全ガイド
+- [⚡ Git Quick Commands](docs/git-quick-commands.md): Gitコマンドのクイックリファレンス
 
 ### セットアップ・移行
 - [Migration Quick Reference](docs/migration-quick-reference.md): 移行手順
