@@ -1,29 +1,23 @@
-// ニュース詳細ページのJavaScript
-// 既存のニュース機能を壊さずに、詳細表示機能を追加
-
-// URLパラメータからスラッグを取得
+// ニュース詳細ページ
 function getNewsSlugFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('slug');
 }
 
-// 静的JSONからニュースデータを取得（既存機能と同じ方式）
 async function fetchNewsData() {
-    try {
-        console.log('🔍 ニュースデータを取得中...');
-        const response = await fetch('./news-data.json');
-        
-        if (!response.ok) {
-            throw new Error('ニュースデータの読み込みに失敗');
-        }
-        
-        const data = await response.json();
-        console.log('✅ ニュースデータ取得成功:', data);
-        return data;
-    } catch (error) {
-        console.error('❌ ニュースデータ取得エラー:', error);
-        throw error;
-    }
+    // 記事詳細用に本文も含めて取得
+    const query = `*[_type == "post"] | order(publishedAt desc) {
+        title,
+        publishedAt,
+        slug,
+        excerpt,
+        body,
+        _id,
+        _createdAt,
+        _updatedAt
+    }`;
+    
+    return await fetchFromSanity(query);
 }
 
 // 特定のスラッグでニュース記事を検索

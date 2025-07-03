@@ -1,32 +1,4 @@
-// Sanity設定
-const sanityConfig = {
-    projectId: 'rt90f87e', // HandlessCMSプロジェクトID
-    dataset: 'production',
-    apiVersion: '2024-01-01',
-    useCdn: true
-};
-
-// 静的JSONファイルからデータを取得（CORS回避）
-async function fetchFromSanityCDN(query) {
-    try {
-        // 事前生成されたJSONファイルを読み込み
-        console.log('🔍 静的JSONファイルからデータを取得中...');
-        const response = await fetch('./news-data.json');
-        
-        if (!response.ok) {
-            throw new Error('静的ファイルの読み込みに失敗');
-        }
-        
-        const data = await response.json();
-        console.log('✅ 静的JSONデータ取得成功:', data);
-        return data;
-    } catch (error) {
-        console.error('❌ 静的JSON取得エラー:', error);
-        throw error;
-    }
-}
-
-// ニュースデータを取得してUIに反映
+// トップページ
 async function loadNewsFromSanity() {
     const newsListEl = document.getElementById('news-list');
     const newsLoadingEl = document.getElementById('news-loading');
@@ -41,8 +13,7 @@ async function loadNewsFromSanity() {
             excerpt
         }`;
         
-        console.log('📡 Sanity CDN経由でデータを取得中...');
-        const posts = await fetchFromSanityCDN(query);
+        const posts = await fetchFromSanity(query);
         
         if (posts && posts.length > 0) {
             console.log(`✅ ${posts.length}件の投稿を取得しました`);

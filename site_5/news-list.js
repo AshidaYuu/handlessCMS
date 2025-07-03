@@ -1,23 +1,17 @@
-// ニュース一覧ページのJavaScript
-// 既存のニュース機能を壊さずに、一覧表示機能を追加
-
-// 静的JSONからニュースデータを取得（既存機能と同じ方式）
+// ニュース一覧ページ
 async function fetchNewsData() {
-    try {
-        console.log('🔍 ニュースデータを取得中...');
-        const response = await fetch('./news-data.json');
-        
-        if (!response.ok) {
-            throw new Error('ニュースデータの読み込みに失敗');
-        }
-        
-        const data = await response.json();
-        console.log('✅ ニュースデータ取得成功:', data);
-        return data;
-    } catch (error) {
-        console.error('❌ ニュースデータ取得エラー:', error);
-        throw error;
-    }
+    // すべての記事を取得（ページネーション用）
+    const query = `*[_type == "post"] | order(publishedAt desc) {
+        title,
+        publishedAt,
+        slug,
+        excerpt,
+        _id,
+        _createdAt,
+        _updatedAt
+    }`;
+    
+    return await fetchFromSanity(query);
 }
 
 // 日付フォーマット関数（既存のフォーマットと統一）
@@ -30,8 +24,13 @@ function formatDate(dateString) {
     return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getDate().toString().padStart(2, '0')}`;
 }
 
+// ページネーション設定
+const ITEMS_PER_PAGE = 10;
+let currentPage = 1;
+let allPosts = [];
+
 // ニュース一覧を表示
-function displayNewsList(posts) {
+function displayNewsList(posts, page = 1) {
     // ローディングを非表示
     const loadingEl = document.getElementById('news-list-loading');
     if (loadingEl) {
@@ -55,8 +54,15 @@ function displayNewsList(posts) {
         return;
     }
     
+    // ページネーション計算
+    const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
+    currentPage = Math.max(1, Math.min(page, totalPages));
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const currentPosts = posts.slice(startIndex, endIndex);
+    
     // ニュース一覧HTMLを生成
-    const newsHTML = posts.map(post => {
+    const newsHTML = currentPosts.map(post => {
         const formattedDate = formatDate(post.publishedAt);
         const slug = post.slug ? post.slug.current : '';
         const title = post.title || 'タイトルなし';
@@ -82,10 +88,118 @@ function displayNewsList(posts) {
         `;
     }).join('');
     
-    containerEl.innerHTML = newsHTML;
+    // ページネーションHTMLを生成
+    const paginationHTML = createPagination(totalPages, currentPage);
+    
+    // HTMLを挿入
+    containerEl.innerHTML = `
+        <div class="news-list-articles">
+            ${newsHTML}
+        </div>
+        ${posts.length > ITEMS_PER_PAGE ? paginationHTML : ''}
+    `;
+    
     containerEl.style.display = 'block';
     
-    console.log(`✅ ${posts.length}件のニュースを表示しました`);
+    // ページネーションのイベントリスナーを設定
+    attachPaginationListeners();
+    
+    console.log(`✅ ${posts.length}件中 ${currentPosts.length}件のニュースを表示しました（ページ ${currentPage}/${totalPages}）`);
+}
+
+// ページネーションHTML生成
+function createPagination(totalPages, currentPage) {
+    if (totalPages <= 1) return '';
+    
+    let paginationHTML = '<nav class="news-pagination" aria-label="ページナビゲーション">';
+    
+    // 前へボタン
+    paginationHTML += `
+        <button class="pagination-btn pagination-prev" 
+                ${currentPage === 1 ? 'disabled' : ''} 
+                data-page="${currentPage - 1}"
+                aria-label="前のページ">
+            ← 前へ
+        </button>
+    `;
+    
+    // ページ番号
+    paginationHTML += '<div class="pagination-numbers">';
+    
+    // ページ番号の表示ロジック
+    const maxVisible = 5; // 表示する最大ページ数
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    
+    if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+    
+    // 最初のページと省略記号
+    if (startPage > 1) {
+        paginationHTML += `<button class="pagination-number" data-page="1">1</button>`;
+        if (startPage > 2) {
+            paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+        }
+    }
+    
+    // ページ番号
+    for (let i = startPage; i <= endPage; i++) {
+        paginationHTML += `
+            <button class="pagination-number ${i === currentPage ? 'active' : ''}" 
+                    data-page="${i}"
+                    ${i === currentPage ? 'aria-current="page"' : ''}>
+                ${i}
+            </button>
+        `;
+    }
+    
+    // 最後のページと省略記号
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+        }
+        paginationHTML += `<button class="pagination-number" data-page="${totalPages}">${totalPages}</button>`;
+    }
+    
+    paginationHTML += '</div>';
+    
+    // 次へボタン
+    paginationHTML += `
+        <button class="pagination-btn pagination-next" 
+                ${currentPage === totalPages ? 'disabled' : ''} 
+                data-page="${currentPage + 1}"
+                aria-label="次のページ">
+            次へ →
+        </button>
+    `;
+    
+    paginationHTML += '</nav>';
+    
+    return paginationHTML;
+}
+
+// ページネーションのイベントリスナー
+function attachPaginationListeners() {
+    const paginationButtons = document.querySelectorAll('[data-page]');
+    
+    paginationButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const page = parseInt(e.target.dataset.page);
+            if (!isNaN(page)) {
+                // ページトップにスムーススクロール
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                
+                // 少し遅延してからページを切り替え（スクロール中の見た目を考慮）
+                setTimeout(() => {
+                    displayNewsList(allPosts, page);
+                }, 300);
+            }
+        });
+    });
 }
 
 // エラー状態を表示
@@ -118,6 +232,9 @@ async function initNewsList() {
             const dateB = new Date(b.publishedAt || 0);
             return dateB.getTime() - dateA.getTime();
         });
+        
+        // グローバル変数に保存
+        allPosts = sortedPosts;
         
         // ニュース一覧を表示
         displayNewsList(sortedPosts);
