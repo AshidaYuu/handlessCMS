@@ -168,11 +168,22 @@ body.loading {
     display: flex;
     align-items: center;
     gap: 12px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: translateY(-2px);
 }
 
 .logo img {
     height: 40px;
     width: auto;
+    transition: filter 0.3s ease;
+}
+
+.logo:hover img {
+    filter: brightness(0.8);
 }
 
 .logo-text {
@@ -180,6 +191,11 @@ body.loading {
     font-weight: bold;
     color: #333;
     letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+}
+
+.logo:hover .logo-text {
+    color: #2c5aa0;
 }
 
 .nav-menu ul {
@@ -3223,6 +3239,20 @@ body.loading {
     line-height: 1.1;
 }
 
+.footer-brand-link {
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.footer-brand-link:hover {
+    transform: translateY(-2px);
+}
+
+.footer-brand-link:hover .footer-brand {
+    color: #2c5aa0;
+}
+
 .footer-company {
     font-size: 16px;
     color: #666;
@@ -3814,6 +3844,16 @@ html {
    ニュースページ共通スタイル
 ======================================== */
 
+/* ニュースページコンテナ */
+.news-hero-container,
+.breadcrumb-container,
+.news-detail-container,
+.news-list-container-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 80px;
+}
+
 /* ニュースタイトルリンクのスタイル */
 .news-title-link {
     color: inherit;
@@ -4204,6 +4244,13 @@ html {
 ======================================== */
 
 @media (max-width: 768px) {
+    .news-hero-container,
+    .breadcrumb-container,
+    .news-detail-container,
+    .news-list-container-wrapper {
+        padding: 0 20px;
+    }
+    
     .breadcrumb {
         padding: 15px 0;
     }
