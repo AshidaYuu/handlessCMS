@@ -1,213 +1,169 @@
-# 🚀 HandlessCMS - Sanity + Next.js ブログサイト
+# 🚀 HandlessCMS - Sanity CMS + Cloudflare Pages
 
-完全自動化対応のヘッドレスCMSブログサイト
+完全自動化対応のヘッドレスCMSサイト
 
 ## 📖 概要
 
-このプロジェクトは、以下の技術を使用して構築された現代的なブログサイトです：
+このプロジェクトは、以下の技術を使用して構築された現代的なCMSサイトです：
 
-- **Frontend**: Next.js 14 (App Router) + TypeScript
+- **Frontend**: 静的HTML + JavaScript (site_5)
 - **CMS**: Sanity Studio v3
-- **Styling**: Tailwind CSS
-- **Deploy**: 自動デプロイ (GitHub Actions + Xserver)
+- **Hosting**: Cloudflare Pages
+- **Automation**: GitHub Actions + Cloudflare Functions
+- **Domain**: kanauuu.com
 
 ## 🚀 プロジェクト構成
 
 ```
 handlessCMS/
-├── frontend/        # Next.js 14アプリケーション
-│   ├── src/
-│   │   ├── app/     # App Router
-│   │   ├── components/  # Reactコンポーネント
-│   │   ├── lib/     # ユーティリティ関数
-│   │   └── types/   # TypeScript型定義
-│   └── .env.local.example  # 環境変数の例
-└── sanity/          # Sanity Studio
-    ├── schemas/     # コンテンツモデル定義
-    └── .env.example # 環境変数の例
+├── site_5/              # メインサイト (Cloudflare Pages)
+│   ├── index.html       # メインページ
+│   ├── script.js        # JavaScript
+│   ├── style.css        # スタイル
+│   ├── news-data.json   # ニュースデータ（自動更新）
+│   └── assets/          # 画像・アセット
+├── sanity/              # Sanity Studio
+│   ├── schemas/         # コンテンツスキーマ
+│   └── sanity.config.ts # Sanity設定
+├── functions/           # Cloudflare Pages Functions
+│   └── api/
+│       └── webhook-sanity.ts # Webhook受信
+├── .github/workflows/   # GitHub Actions
+│   └── update-news.yml  # 自動更新ワークフロー
+├── scripts/             # ユーティリティ
+│   └── update-news-manual.js # 手動更新
+└── docs/                # ドキュメント
 ```
 
-## 📋 前提条件
+## 🎯 機能
 
-- Node.js 18以上
-- npm または yarn
-- Sanityアカウント（[sanity.io](https://www.sanity.io/)で無料作成可能）
+### ✨ 自動化システム
 
-## 🛠️ セットアップ手順
+```
+Sanity Studio → Webhook → Cloudflare Functions → GitHub Actions → サイト更新
+                                ↓
+                          kanauuu.com（本番サイト）
+```
 
-### Step 1: Sanityプロジェクトの作成
+1. **Sanity Studio**で投稿を作成・編集
+2. **Webhook**が自動的にCloudflare Functionsに送信
+3. **GitHub Actions**が自動実行され、最新データを取得
+4. **news-data.json**が自動更新
+5. **サイト**に最新ニュースが反映（約2-3分）
 
-1. [Sanity Management Console](https://www.sanity.io/manage)にアクセス
-2. 新しいプロジェクトを作成
-3. プロジェクトIDをメモしておく
+### 🌐 アクセスURL
 
-### Step 2: 環境変数の設定
+| サービス | URL | 用途 |
+|---------|-----|------|
+| **本番サイト** | https://kanauuu.com | 公開サイト |
+| **Sanity Studio** | https://rt90f87e.sanity.studio/ | コンテンツ管理 |
+| **開発用URL** | https://handlesscms.pages.dev | テスト用 |
 
-#### Sanity Studioの設定
+## 🛠️ 開発環境セットアップ
+
+### 1. リポジトリクローン
+
+```bash
+git clone https://github.com/AshidaYuu/handlessCMS.git
+cd handlessCMS
+```
+
+### 2. Sanity Studio セットアップ
 
 ```bash
 cd sanity
-cp .env.example .env
+npm install
+npm run dev  # http://localhost:3333
 ```
 
-`.env`ファイルを編集:
+### 3. 手動ニュース更新（必要時）
+
+```bash
+node scripts/update-news-manual.js
+```
+
+## 📝 コンテンツ管理
+
+### 新しい投稿を作成
+
+1. **Sanity Studio**にアクセス: https://rt90f87e.sanity.studio/
+2. ログイン後、「Post」→「Create」
+3. 投稿内容を入力
+4. **Publish**ボタンをクリック
+5. 約2-3分でサイトに自動反映
+
+### 投稿の編集・削除
+
+- Sanity Studioで編集・削除すると自動的にサイトに反映
+
+## 🔧 設定
+
+### 環境変数
+
+#### Cloudflare Pages
+
+| 変数名 | 値 | 説明 |
+|--------|-----|------|
+| GITHUB_TOKEN | ghp_xxxxx | GitHub Personal Access Token |
+| SANITY_PROJECT_ID | rt90f87e | SanityプロジェクトID |
+
+#### Sanity Studio
+
 ```env
-SANITY_STUDIO_PROJECT_ID=あなたのプロジェクトID
+SANITY_STUDIO_PROJECT_ID=rt90f87e
 SANITY_STUDIO_DATASET=production
 ```
 
-#### Next.jsアプリケーションの設定
+## 🚀 デプロイ
+
+### 自動デプロイ
+
+- GitHubへのpushで自動的にCloudflare Pagesにデプロイ
+- Sanity Studioでの投稿でコンテンツが自動更新
+
+### 手動デプロイ（必要時）
 
 ```bash
-cd ../frontend
-cp .env.local.example .env.local
-```
-
-`.env.local`ファイルを編集:
-```env
-NEXT_PUBLIC_SANITY_PROJECT_ID=あなたのプロジェクトID
-NEXT_PUBLIC_SANITY_DATASET=production
-NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
-SANITY_API_READ_TOKEN=（オプション：プレビュー機能用）
-SANITY_PREVIEW_SECRET=任意のシークレットキー
-```
-
-### Step 3: 依存関係のインストール
-
-```bash
-# Sanity Studioの依存関係
-cd sanity
-npm install
-
-# Next.jsアプリケーションの依存関係
-cd ../frontend
-npm install
-```
-
-### Step 4: Sanity Studioの初期化
-
-```bash
-cd sanity
-npx sanity init --bare
-```
-
-プロンプトが表示されたら:
-- プロジェクトIDを入力
-- データセット名は`production`を使用
-
-### Step 5: 開発サーバーの起動
-
-2つのターミナルウィンドウを開いて:
-
-**ターミナル1: Sanity Studio**
-```bash
-cd sanity
-npm run dev
-```
-→ http://localhost:3333 でSanity Studioにアクセス
-
-**ターミナル2: Next.jsアプリケーション**
-```bash
-cd frontend
-npm run dev
-```
-→ http://localhost:3000 でサイトにアクセス
-
-## 📝 次のステップ
-
-### Step 2: APIルートとページの実装
-
-1. **APIルートの作成**
-   - `/api/preview` - プレビューモードの設定
-   - `/api/exit-preview` - プレビューモードの解除
-
-2. **ページの実装**
-   - トップページ（投稿一覧）
-   - 投稿詳細ページ
-   - カテゴリーページ
-   - 著者ページ
-
-3. **コンポーネントの作成**
-   - PostCard（投稿カード）
-   - PostList（投稿リスト）
-   - CategoryList（カテゴリーリスト）
-   - AuthorBio（著者情報）
-
-### Step 3: GitHub Actionsの設定
-
-自動デプロイのためのワークフローを設定
-
-### Step 4: Xserverへのデプロイ設定
-
-1. SSH接続の設定
-2. Node.jsアプリケーションのデプロイ
-3. PM2での永続化
-
-### Step 5: Webhookの設定
-
-Sanityの更新を自動的にサイトに反映
-
-## 🎯 主な機能
-
-- **ヘッドレスCMS**: Sanityによるコンテンツ管理
-- **高速なサイト**: Next.js 14のApp Router使用
-- **型安全**: TypeScriptによる型チェック
-- **レスポンシブデザイン**: Tailwind CSS使用
-- **画像最適化**: Next.js Image + Sanity画像変換
-- **プレビュー機能**: 下書きのリアルタイムプレビュー
-- **自動デプロイ**: GitHub Actions連携
-
-## 📚 プロジェクトで使用している主な技術
-
-- **Next.js 14**: Reactフレームワーク（App Router使用）
-- **TypeScript**: 型安全な開発
-- **Tailwind CSS**: ユーティリティファーストCSS
-- **Sanity Studio v3**: ヘッドレスCMS
-- **GROQ**: Sanityのクエリ言語
-
-## 🔧 よく使うコマンド
-
-```bash
-# 開発サーバー起動（両方同時）
-npm run dev      # frontendディレクトリで実行
-
-# Sanity Studioのみ起動
-npm run sanity   # frontendディレクトリで実行
-
-# ビルド
-npm run build    # 各ディレクトリで実行
-
 # Sanity Studioのデプロイ
-cd sanity && npm run deploy
+cd sanity
+npx sanity login
+npm run deploy
 ```
 
-## 🆘 トラブルシューティング
+## 📊 監視・分析
 
-### Sanity Studioにログインできない
-- プロジェクトIDが正しいか確認
-- Sanityアカウントでログインしているか確認
+- **Cloudflare Analytics**: サイトアクセス解析
+- **GitHub Actions**: 自動化の実行状況
+- **Sanity**: コンテンツ管理の履歴
 
-### データが表示されない
-- 環境変数が正しく設定されているか確認
-- Sanity Studioでコンテンツを作成したか確認
-- APIバージョンの日付が正しいか確認
+## 🔒 セキュリティ
 
-### 型エラーが発生する
-- `npm install`を再実行
-- TypeScriptのバージョンを確認
+- SSL証明書: Cloudflareが自動管理
+- DDoS保護: Cloudflare標準機能
+- 環境変数: 暗号化して管理
 
-## 📖 参考リンク
+## 📚 ドキュメント
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Sanity Documentation](https://www.sanity.io/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Migration Quick Reference](docs/migration-quick-reference.md): 移行手順
+- [Cloudflare Setup Guide](docs/cloudflare-pages-setup.md): 詳細セットアップ
+- [Troubleshooting](docs/cloudflare-troubleshooting.md): トラブルシューティング
 
-## 🔄 更新履歴
+## 🤝 開発
 
-- 2025-01-02: 初回リリース、GitHub Actions設定完了
+### プルリクエスト
+
+1. フィーチャーブランチを作成
+2. 変更を実装
+3. プルリクエストを作成
+
+### 課題・バグ報告
+
+GitHubのIssuesでお願いします。
+
+## 📄 ライセンス
+
+MIT License
 
 ---
 
-初心者の方でも、この手順に従えば確実にセットアップできます。
-質問や問題がある場合は、各技術の公式ドキュメントを参照してください。
+**🌟 HandlessCMS - 地方から夢は叶う**

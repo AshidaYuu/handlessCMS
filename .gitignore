@@ -130,3 +130,12 @@ secrets/
 
 # Vercel
 .vercel
+
+# Screenshots and documentation images
+*.png
+スクリーンショット*
+screenshot*
+
+# Cloudflare
+.wrangler/
+wrangler.toml.bak
