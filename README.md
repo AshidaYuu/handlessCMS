@@ -144,6 +144,11 @@ npm run deploy
 
 ## 📚 ドキュメント
 
+### 開発・カスタマイズ
+- [🎨 Frontend Development Guide](docs/frontend-development-guide.md): フロントエンド修正の完全ガイド
+- [⚡ Quick Edit Reference](docs/quick-edit-reference.md): 修正のクイックリファレンス
+
+### セットアップ・移行
 - [Migration Quick Reference](docs/migration-quick-reference.md): 移行手順
 - [Cloudflare Setup Guide](docs/cloudflare-pages-setup.md): 詳細セットアップ
 - [Troubleshooting](docs/cloudflare-troubleshooting.md): トラブルシューティング
