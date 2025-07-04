@@ -6,9 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "deploy:build": "npm run build",
-    "export": "next build && next export"
+    "lint": "next lint"
   },
   "dependencies": {
     "@sanity/client": "^7.6.0",
