@@ -22,7 +22,7 @@ export default function Footer() {
               </div>
               <div className="footer-nav-column">
                 <ul>
-                  <li><a href="/news">NEWS<span className="divider"></span><span>お知らせ</span></a></li>
+                  <li><a href="#news-section">NEWS<span className="divider"></span><span>お知らせ</span></a></li>
                   <li><a href="#team-section">OUR TEAM<span className="divider"></span><span>私たちのチーム</span></a></li>
                   <li><a href="#contact-section">CONTACT<span className="divider"></span><span>お問い合わせ</span></a></li>
                   <li><a href="#">PRIVACY<span className="divider"></span><span>個人情報保護方針</span></a></li>

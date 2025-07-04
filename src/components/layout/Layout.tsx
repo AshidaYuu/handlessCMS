@@ -9,7 +9,7 @@ interface LayoutProps {
   className?: string
 }
 
-export default function Layout({ children, className = '' }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <LoadingScreen />
