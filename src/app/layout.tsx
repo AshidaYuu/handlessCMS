@@ -50,6 +50,8 @@ export default function RootLayout({
     <html lang="ja" className={notoSansJP.variable}>
       <body className="font-sans antialiased bg-white text-gray-900">
         {children}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
       </body>
     </html>
   );
