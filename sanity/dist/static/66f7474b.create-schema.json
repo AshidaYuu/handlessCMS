@@ -1,0 +1,371 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "タイトルは必須です"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "タイトル"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "スラッグは必須です"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "スラッグ（URL）"
+      },
+      {
+        "to": [
+          {
+            "type": "author"
+          }
+        ],
+        "name": "author",
+        "type": "reference",
+        "title": "著者"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "mainImage",
+        "type": "image",
+        "title": "メイン画像"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "category"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to カテゴリー"
+          }
+        ],
+        "name": "categories",
+        "type": "array",
+        "title": "カテゴリー"
+      },
+      {
+        "name": "publishedAt",
+        "type": "datetime",
+        "title": "公開日"
+      },
+      {
+        "name": "body",
+        "type": "blockContent",
+        "title": "本文"
+      }
+    ],
+    "name": "post",
+    "type": "document",
+    "title": "ブログ記事"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "名前は必須です"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "名前"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "スラッグは必須です"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "スラッグ"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "プロフィール画像"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "bio",
+        "type": "array",
+        "title": "自己紹介"
+      }
+    ],
+    "name": "author",
+    "type": "document",
+    "title": "著者"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "タイトルは必須です"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "タイトル"
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "title": "説明"
+      }
+    ],
+    "name": "category",
+    "type": "document",
+    "title": "カテゴリー"
+  },
+  {
+    "of": [
+      {
+        "marks": {
+          "annotations": [
+            {
+              "fields": [
+                {
+                  "validation": [
+                    {
+                      "rules": [
+                        {
+                          "flag": "uri",
+                          "constraint": {
+                            "options": {
+                              "scheme": [
+                                "/^http$/",
+                                "/^https$/"
+                              ],
+                              "allowRelative": false,
+                              "relativeOnly": false,
+                              "allowCredentials": false
+                            }
+                          }
+                        }
+                      ],
+                      "level": "error"
+                    }
+                  ],
+                  "name": "href",
+                  "type": "url",
+                  "title": "URL"
+                }
+              ],
+              "name": "link",
+              "type": "object",
+              "title": "URL"
+            }
+          ],
+          "decorators": [
+            {
+              "value": "strong",
+              "title": "太字"
+            },
+            {
+              "value": "em",
+              "title": "イタリック"
+            },
+            {
+              "value": "underline",
+              "title": "下線"
+            },
+            {
+              "value": "code",
+              "title": "コード"
+            }
+          ]
+        },
+        "lists": [
+          {
+            "value": "bullet",
+            "title": "箇条書き"
+          },
+          {
+            "value": "number",
+            "title": "番号付き"
+          }
+        ],
+        "styles": [
+          {
+            "value": "normal",
+            "title": "通常"
+          },
+          {
+            "value": "h1",
+            "title": "見出し1"
+          },
+          {
+            "value": "h2",
+            "title": "見出し2"
+          },
+          {
+            "value": "h3",
+            "title": "見出し3"
+          },
+          {
+            "value": "h4",
+            "title": "見出し4"
+          },
+          {
+            "value": "blockquote",
+            "title": "引用"
+          }
+        ],
+        "of": [],
+        "type": "block"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "type": "image"
+      }
+    ],
+    "name": "blockContent",
+    "type": "array",
+    "title": "ブロックコンテンツ"
+  }
+]
