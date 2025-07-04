@@ -1,4 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kanauuu公式サイト兼ブログ
+
+Next.js + Sanity CMSで構築された企業サイト
+
+## 🚀 デプロイ済み
+- サイトURL: https://handlesscms.pages.dev
+- 更新日: 2025年7月4日
 
 ## Getting Started
 
