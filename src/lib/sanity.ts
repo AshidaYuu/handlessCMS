@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
+import type { SanityImage } from '@/types'
 
 export const sanityConfig = {
   projectId: 'rt90f87e',
@@ -17,27 +18,8 @@ export function urlFor(source: SanityImage) {
   return builder.image(source)
 }
 
-// 型定義
-export interface Post {
-  _id: string
-  _createdAt: string
-  _updatedAt: string
-  title: string
-  slug: {
-    current: string
-  }
-  publishedAt: string
-  excerpt?: string
-  body?: unknown[]
-}
-
-export interface SanityImage {
-  _type: 'image'
-  asset: {
-    _ref: string
-    _type: 'reference'
-  }
-}
+// 型定義はtypes/index.tsにまとめられています
+export type { Post, SanityImage, Author, Category } from '@/types'
 
 // 記事取得用のクエリ
 export const queries = {
@@ -50,7 +32,18 @@ export const queries = {
     slug,
     publishedAt,
     excerpt,
-    body
+    body,
+    mainImage,
+    author->{
+      _id,
+      name,
+      image
+    },
+    categories[]->{
+      _id,
+      title,
+      description
+    }
   }`,
   
   // 特定のスラッグの記事取得
@@ -62,7 +55,18 @@ export const queries = {
     slug,
     publishedAt,
     excerpt,
-    body
+    body,
+    mainImage,
+    author->{
+      _id,
+      name,
+      image
+    },
+    categories[]->{
+      _id,
+      title,
+      description
+    }
   }`,
   
   // 最新記事取得（件数指定）
@@ -71,6 +75,11 @@ export const queries = {
     title,
     slug,
     publishedAt,
-    excerpt
+    excerpt,
+    mainImage,
+    categories[]->{
+      _id,
+      title
+    }
   }`
 }

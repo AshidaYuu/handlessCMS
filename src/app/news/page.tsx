@@ -27,27 +27,23 @@ export default async function NewsListPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gray-50">
-        {/* Breadcrumb */}
-        <nav className="bg-white border-b">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <ol className="flex items-center gap-2 text-sm">
-              <li>
-                <Link href="/" className="text-gray-500 hover:text-gray-700">HOME</Link>
-              </li>
-              <li className="text-gray-400">/</li>
-              <li className="text-gray-900 font-medium">NEWS</li>
-            </ol>
+      <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
+        {/* Hero Section */}
+        <div className="relative py-20 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-70"></div>
+          <div className="relative max-w-7xl mx-auto px-6 text-center">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              NEWS & BLOG
+            </h1>
+            <p className="text-xl text-gray-700 max-w-2xl mx-auto">
+              Kanauuuの最新情報やお知らせをお届けします
+            </p>
           </div>
-        </nav>
+        </div>
 
         {/* Main Content */}
-        <main className="py-12 md:py-20">
-          <div className="max-w-4xl mx-auto px-6">
-            <h1 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-              お知らせ一覧
-            </h1>
-
+        <main className="relative py-12 md:py-20">
+          <div className="max-w-7xl mx-auto px-6">
             <NewsListClient posts={posts} />
           </div>
         </main>

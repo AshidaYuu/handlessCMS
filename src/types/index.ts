@@ -32,6 +32,15 @@ export interface SanityImage {
   }
 }
 
+// 著者の型定義
+export interface Author extends SanityDocument {
+  _type: 'author'
+  name: string
+  slug?: Slug
+  image?: SanityImage
+  bio?: string
+}
+
 // ブログ記事の型定義
 export interface Post extends SanityDocument {
   _type: 'post'
@@ -40,7 +49,8 @@ export interface Post extends SanityDocument {
   publishedAt: string
   excerpt?: string
   body?: unknown[] // Portable Text
-  featuredImage?: SanityImage
+  mainImage?: SanityImage
+  author?: Author
   categories?: Category[]
   tags?: Tag[]
 }
