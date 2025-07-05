@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
 import Layout from '@/components/layout/Layout'
 import { sanityClient, queries } from '@/lib/sanity'
 import { Post } from '@/types'
@@ -16,8 +15,8 @@ async function getAllPosts(): Promise<Post[]> {
   try {
     const posts = await sanityClient.fetch(queries.allPosts)
     return posts || []
-  } catch (error) {
-    console.error('Failed to fetch posts:', error)
+  } catch {
+    console.error('Failed to fetch posts')
     return []
   }
 }

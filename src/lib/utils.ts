@@ -17,7 +17,7 @@ export function formatDate(date: string | Date): string {
     const day = d.getUTCDate().toString().padStart(2, '0')
     
     return `${year}.${month}.${day}`
-  } catch (error) {
+  } catch {
     return '日付不明'
   }
 }

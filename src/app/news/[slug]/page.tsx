@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Layout from '@/components/layout/Layout'
 import { sanityClient, queries } from '@/lib/sanity'
 import { Post } from '@/types'
-import { formatDate, generateMetadata } from '@/lib/utils'
+import { formatDate, generateMetadata as generateMetaData } from '@/lib/utils'
 import Link from 'next/link'
 
 interface PageProps {
@@ -16,8 +16,8 @@ async function getPost(slug: string): Promise<Post | null> {
   try {
     const post = await sanityClient.fetch(queries.postBySlug(slug))
     return post
-  } catch (error) {
-    console.error('Failed to fetch post:', error)
+  } catch {
+    console.error('Failed to fetch post')
     return null
   }
 }
@@ -28,8 +28,8 @@ export async function generateStaticParams() {
     return posts.map((post: Post) => ({
       slug: post.slug.current,
     }))
-  } catch (error) {
-    console.error('Failed to fetch posts for static params:', error)
+  } catch {
+    console.error('Failed to fetch posts for static params')
     return []
   }
 }
@@ -39,13 +39,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPost(slug)
   
   if (!post) {
-    return generateMetadata({
+    return generateMetaData({
       title: 'お知らせが見つかりません',
       description: 'お探しのお知らせは見つかりませんでした。',
     })
   }
 
-  return generateMetadata({
+  return generateMetaData({
     title: post.title,
     description: post.excerpt || post.title,
     url: `/news/${post.slug.current}`,

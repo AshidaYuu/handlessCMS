@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import Script from 'next/script'
-import LoadingScreen from '@/components/LoadingScreen'
 
 interface LayoutProps {
   children: ReactNode
@@ -12,7 +11,6 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <LoadingScreen />
       <Header />
       <main>
         {children}
