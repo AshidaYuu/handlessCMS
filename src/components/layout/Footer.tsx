@@ -5,8 +5,10 @@ export default function Footer() {
         <div className="footer-content">
           <div className="footer-left">
             <div className="footer-logo">
-              <h2 className="footer-brand">KANAUUU</h2>
-              <p className="footer-company">合同会社Kanauuu</p>
+              <a href="/">
+                <h2 className="footer-brand">KANAUUU</h2>
+                <p className="footer-company">合同会社Kanauuu</p>
+              </a>
             </div>
           </div>
           

@@ -8,30 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // ローディング完了処理
     function completeLoading() {
         setTimeout(() => {
-            // ローディングテキストをMVの位置に移動
-            const loadingText = document.querySelector('.loading-text');
-            const mvTitle = document.querySelector('.mv-title');
-            
-            if (loadingText && mvTitle) {
-                const mvRect = mvTitle.getBoundingClientRect();
-                const loadingRect = loadingText.getBoundingClientRect();
-                
-                const translateX = mvRect.left - loadingRect.left;
-                const translateY = mvRect.top - loadingRect.top;
-                
-                loadingText.style.transition = 'transform 1s ease-out';
-                loadingText.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.5)`;
-            }
-            
-            setTimeout(() => {
+            if (loadingScreen) {
                 loadingScreen.style.opacity = '0';
-                subText.classList.add('show');
+                loadingScreen.style.transition = 'opacity 1s ease';
                 
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
-                    body.classList.remove('loading');
-                }, 500);
-            }, 1000);
+                    if (body) {
+                        body.classList.remove('loading');
+                    }
+                }, 1000);
+            }
         }, 2000); // ローディング表示時間
     }
     
@@ -135,52 +122,83 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // スライダー制御
-    const slides = document.querySelectorAll('.mv-slide');
-    const dots = document.querySelectorAll('.slide-dot');
-    const progressBar = document.querySelector('.slide-progress-bar');
-    let currentSlide = 0;
-    const slideInterval = 5000; // 5秒
-    
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
+    // Main Visual Slider - 少し遅延させて確実に要素を取得
+    setTimeout(() => {
+        const slides = document.querySelectorAll('.mv-slide');
+        const dots = document.querySelectorAll('.slide-dot');
+        const progressBar = document.querySelector('.slide-progress-bar');
+        let currentSlide = 0;
+        const slideInterval = 4000; // 4秒
+        let autoSlideTimer;
+        
+        console.log('Slides found:', slides.length);
+        console.log('Dots found:', dots.length);
+        console.log('Progress bar found:', !!progressBar);
+        
+        // sub-textを表示
+        const subText = document.querySelector('.sub-text');
+        if (subText) {
+            subText.classList.add('show');
+        }
+        
+        function showSlide(index) {
+            console.log('Showing slide:', index);
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            
+            resetProgress();
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            console.log('Next slide:', currentSlide);
+            showSlide(currentSlide);
+        }
+        
+        function resetProgress() {
+            if (progressBar) {
+                progressBar.style.animation = 'none';
+                setTimeout(() => {
+                    progressBar.style.animation = `progressAnimationHorizontal ${slideInterval}ms linear`;
+                }, 10);
+            }
+        }
+        
+        function startAutoSlide() {
+            console.log('Starting auto slide');
+            autoSlideTimer = setInterval(nextSlide, slideInterval);
+        }
+        
+        function stopAutoSlide() {
+            console.log('Stopping auto slide');
+            clearInterval(autoSlideTimer);
+        }
+        
+        // Dot click events
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                console.log('Dot clicked:', index);
+                currentSlide = index;
+                showSlide(currentSlide);
+                stopAutoSlide();
+                startAutoSlide();
+            });
         });
         
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-    }
-    
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-        resetProgress();
-    }
-    
-    function resetProgress() {
-        if (progressBar) {
-            progressBar.style.animation = 'none';
-            setTimeout(() => {
-                progressBar.style.animation = `slideProgress ${slideInterval}ms linear`;
-            }, 10);
-        }
-    }
-    
-    // ドットクリックイベント
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            currentSlide = index;
+        // Initialize slider
+        if (slides.length > 0) {
+            console.log('Initializing slider with', slides.length, 'slides');
             showSlide(currentSlide);
-            resetProgress();
-        });
-    });
-    
-    // 自動スライド開始
-    if (slides.length > 0) {
-        setInterval(nextSlide, slideInterval);
-        resetProgress();
-    }
+            startAutoSlide();
+        } else {
+            console.error('No slides found!');
+        }
+    }, 1000); // 1秒遅延
 
     // プロジェクトスライダー
     const projectPrev = document.querySelector('.prev-btn');

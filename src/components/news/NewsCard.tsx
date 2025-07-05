@@ -24,77 +24,64 @@ export default function NewsCard({ post }: NewsCardProps) {
   const category = post.categories?.[0]?.title || 'お知らせ'
 
   return (
-    <Link
-      href={`/news/${post.slug.current}`}
-      className="block bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 overflow-hidden group"
-    >
+    <Link href={`/news/${post.slug.current}`} className="news-card">
       {/* Image */}
-      <div className="relative h-48 bg-gray-100">
+      <div className="news-card-image">
         <Image
           src={imageUrl}
           alt={post.title}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         
         {/* Category Badge */}
-        <div className="absolute top-3 left-3">
-          <span className="inline-block px-2 py-1 text-xs font-medium text-white bg-blue-600 rounded">
-            {category}
-          </span>
+        <div className="news-card-badge">
+          <span>{category}</span>
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="news-card-content">
         {/* Date */}
-        <div className="text-sm text-gray-500 mb-2">
+        <div className="news-card-date">
           {formatDate(post.publishedAt)}
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+        <h3 className="news-card-title">
           {post.title}
         </h3>
 
         {/* Excerpt */}
         {post.excerpt && (
-          <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+          <p className="news-card-excerpt">
             {post.excerpt}
           </p>
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between">
+        <div className="news-card-footer">
           {/* Author */}
           {post.author && (
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-xs font-medium text-blue-600">
-                  {post.author.name.charAt(0)}
-                </span>
+            <div className="news-card-author">
+              <div className="author-avatar">
+                <span>{post.author.name.charAt(0)}</span>
               </div>
-              <span className="text-sm text-gray-600">
-                {post.author.name}
-              </span>
+              <span className="author-name">{post.author.name}</span>
             </div>
           )}
 
           {/* Read More */}
-          <div className="text-blue-600 text-sm font-medium">
+          <div className="news-card-more">
             続きを読む →
           </div>
         </div>
 
         {/* Tags */}
         {post.categories && post.categories.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-gray-100">
+          <div className="news-card-tags">
             {post.categories.slice(0, 3).map((cat, i) => (
-              <span
-                key={i}
-                className="inline-block px-2 py-1 text-xs text-gray-600 bg-gray-100 rounded"
-              >
+              <span key={i} className="news-tag">
                 #{cat.title}
               </span>
             ))}

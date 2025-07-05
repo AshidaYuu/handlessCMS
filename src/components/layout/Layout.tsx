@@ -15,7 +15,7 @@ export default function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <Footer />
-      <Script src="/js/animations.js" strategy="lazyOnload" />
+      <Script src="/js/animations.js" strategy="afterInteractive" />
     </>
   )
 }

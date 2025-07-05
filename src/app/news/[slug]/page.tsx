@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Layout from '@/components/layout/Layout'
+import PortableText from '@/components/PortableText'
 import { sanityClient, queries } from '@/lib/sanity'
 import { Post } from '@/types'
 import { formatDate, generateMetadata as generateSEOMetadata } from '@/lib/utils'
@@ -63,20 +64,20 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-white">
+      <div className="article-detail">
         {/* Breadcrumb */}
-        <nav className="bg-gray-50 border-b">
-          <div className="max-w-4xl mx-auto px-6 py-4">
-            <ol className="flex items-center gap-2 text-sm">
+        <nav className="article-breadcrumb">
+          <div className="article-breadcrumb-container">
+            <ol className="breadcrumb-list">
               <li>
-                <Link href="/" className="text-gray-500 hover:text-gray-700">HOME</Link>
+                <Link href="/" className="breadcrumb-link">HOME</Link>
               </li>
-              <li className="text-gray-400">/</li>
+              <li className="breadcrumb-separator">/</li>
               <li>
-                <Link href="/news" className="text-gray-500 hover:text-gray-700">NEWS</Link>
+                <Link href="/news" className="breadcrumb-link">NEWS</Link>
               </li>
-              <li className="text-gray-400">/</li>
-              <li className="text-gray-900 font-medium truncate max-w-xs">
+              <li className="breadcrumb-separator">/</li>
+              <li className="breadcrumb-current">
                 {post.title}
               </li>
             </ol>
@@ -84,62 +85,56 @@ export default async function NewsDetailPage({ params }: PageProps) {
         </nav>
 
         {/* Main Content */}
-        <article className="py-12 md:py-20">
-          <div className="max-w-4xl mx-auto px-6">
+        <article className="article-content">
+          <div className="article-container">
             {/* Header */}
-            <header className="mb-12 text-center">
-              <time className="text-sm text-gray-500">
+            <header className="article-header">
+              <time className="article-date">
                 {formatDate(post.publishedAt)}
               </time>
-              <h1 className="mt-4 text-3xl md:text-4xl font-bold text-gray-900">
+              <h1 className="article-title">
                 {post.title}
               </h1>
             </header>
 
             {/* Body */}
-            <div className="prose prose-lg max-w-none">
+            <div className="article-body">
               {post.excerpt ? (
-                <div className="mb-8">
-                  <p className="text-xl text-gray-700 leading-relaxed">
-                    {post.excerpt}
-                  </p>
+                <div className="article-excerpt">
+                  <p>{post.excerpt}</p>
                 </div>
               ) : null}
 
-              {/* Portable Text would be rendered here */}
+              {/* Portable Text Content */}
               {post.body ? (
-                <div className="space-y-4">
-                  {/* TODO: Implement Portable Text renderer */}
-                  <p className="text-gray-600">
-                    この記事の詳細は、Sanity Studio で設定された内容が表示されます。
-                  </p>
+                <div className="article-main-content">
+                  <PortableText value={post.body} />
                 </div>
               ) : (
-                <div className="bg-gray-50 rounded-lg p-8 text-center">
-                  <p className="text-gray-600">
-                    この記事の本文は準備中です。
-                  </p>
+                <div className="article-placeholder">
+                  <p>この記事の本文は準備中です。</p>
                 </div>
               )}
             </div>
 
             {/* Footer Actions */}
-            <footer className="mt-16 pt-8 border-t">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/news"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  一覧に戻る
+            <footer className="article-footer">
+              <div className="article-actions">
+                <Link href="/news" className="view-more-btn-dark">
+                  <span>一覧に戻る</span>
+                  <div className="btn-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </Link>
-                <Link
-                  href="/"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  トップページ
+                <Link href="/" className="view-more-btn-alt">
+                  <span>トップページ</span>
+                  <div className="btn-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </Link>
               </div>
             </footer>
