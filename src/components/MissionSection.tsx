@@ -82,7 +82,7 @@ export default function MissionSection() {
               </div>
               <div className="item-content">
                 <h4>「地方発イノベーションの交差点になる」</h4>
-                <p>教育現場・企業・クリエイターがつながり、アイデアが循環する"挑戦のエコシステム"を育みます。</p>
+                <p>教育現場・企業・クリエイターがつながり、アイデアが循環する&ldquo;挑戦のエコシステム&rdquo;を育みます。</p>
               </div>
             </div>
             

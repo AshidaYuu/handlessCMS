@@ -115,14 +115,14 @@ export default async function HomePage() {
                   <p>地域とともに歩む最新の取り組みや成果、<br />イベント情報をお伝えします。</p>
                 </div>
                 
-                <a href="/news" className="view-more-btn-dark news-view-all">
+                <Link href="/news" className="view-more-btn-dark news-view-all">
                   <span>VIEW ALL</span>
                   <div className="btn-dots">
                     <span></span>
                     <span></span>
                     <span></span>
                   </div>
-                </a>
+                </Link>
               </div>
               
               <div className="news-right">
@@ -180,14 +180,14 @@ export default async function HomePage() {
                   )}
                 </div>
                 
-                <a href="/news" className="view-more-btn-dark news-view-all-mobile">
+                <Link href="/news" className="view-more-btn-dark news-view-all-mobile">
                   <span>VIEW ALL</span>
                   <div className="btn-dots">
                     <span></span>
                     <span></span>
                     <span></span>
                   </div>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

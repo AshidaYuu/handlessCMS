@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 export default function Header() {
@@ -69,7 +70,7 @@ export default function Header() {
   return (
     <header id="header">
       <div className="header-container">
-        <a href="/" className="logo">
+        <Link href="/" className="logo">
           <Image
             src="/assets/images/logo.png"
             alt="Kanauuu"
@@ -77,7 +78,7 @@ export default function Header() {
             height={40}
           />
           <span className="logo-text">Kanauuu</span>
-        </a>
+        </Link>
         
         <nav className="nav-menu">
           <ul>

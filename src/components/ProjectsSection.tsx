@@ -59,7 +59,6 @@ export default function ProjectsSection() {
     
     const scrollLeft = galleryRef.current.scrollLeft
     const scrollWidth = galleryRef.current.scrollWidth
-    const clientWidth = galleryRef.current.clientWidth
     const setWidth = (scrollWidth / 3) // 1セットの幅
     
     // 最初のセットの終わりに近づいたら真ん中のセットに瞬間移動

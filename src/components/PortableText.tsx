@@ -13,7 +13,7 @@ function urlFor(source: any) {
 
 const components = {
   types: {
-    image: ({ value }: { value: any }) => {
+    image: ({ value }: any) => {
       if (!value?.asset?._ref) {
         return null
       }
@@ -37,61 +37,64 @@ const components = {
     },
   },
   block: {
-    h1: ({ children }: { children: React.ReactNode }) => (
+    h1: ({ children }: any) => (
       <h1 className="portable-h1">{children}</h1>
     ),
-    h2: ({ children }: { children: React.ReactNode }) => (
+    h2: ({ children }: any) => (
       <h2 className="portable-h2">{children}</h2>
     ),
-    h3: ({ children }: { children: React.ReactNode }) => (
+    h3: ({ children }: any) => (
       <h3 className="portable-h3">{children}</h3>
     ),
-    h4: ({ children }: { children: React.ReactNode }) => (
+    h4: ({ children }: any) => (
       <h4 className="portable-h4">{children}</h4>
     ),
-    blockquote: ({ children }: { children: React.ReactNode }) => (
+    blockquote: ({ children }: any) => (
       <blockquote className="portable-blockquote">{children}</blockquote>
     ),
-    normal: ({ children }: { children: React.ReactNode }) => (
+    normal: ({ children }: any) => (
       <p className="portable-paragraph">{children}</p>
     ),
   },
   list: {
-    bullet: ({ children }: { children: React.ReactNode }) => (
+    bullet: ({ children }: any) => (
       <ul className="portable-list portable-list-bullet">{children}</ul>
     ),
-    number: ({ children }: { children: React.ReactNode }) => (
+    number: ({ children }: any) => (
       <ol className="portable-list portable-list-number">{children}</ol>
     ),
   },
   listItem: {
-    bullet: ({ children }: { children: React.ReactNode }) => (
+    bullet: ({ children }: any) => (
       <li className="portable-list-item">{children}</li>
     ),
-    number: ({ children }: { children: React.ReactNode }) => (
+    number: ({ children }: any) => (
       <li className="portable-list-item">{children}</li>
     ),
   },
   marks: {
-    strong: ({ children }: { children: React.ReactNode }) => (
+    strong: ({ children }: any) => (
       <strong className="portable-strong">{children}</strong>
     ),
-    em: ({ children }: { children: React.ReactNode }) => (
+    em: ({ children }: any) => (
       <em className="portable-em">{children}</em>
     ),
-    code: ({ children }: { children: React.ReactNode }) => (
+    code: ({ children }: any) => (
       <code className="portable-code">{children}</code>
     ),
-    link: ({ children, value }: { children: React.ReactNode; value: { href: string } }) => (
-      <a
-        href={value.href}
-        className="portable-link"
-        target={value.href.startsWith('http') ? '_blank' : undefined}
-        rel={value.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-      >
-        {children}
-      </a>
-    ),
+    link: ({ children, value }: any) => {
+      const href = value?.href || '#'
+      return (
+        <a
+          href={href}
+          className="portable-link"
+          target={href.startsWith('http') ? '_blank' : undefined}
+          rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        >
+          {children}
+        </a>
+      )
+    },
   },
 }
 

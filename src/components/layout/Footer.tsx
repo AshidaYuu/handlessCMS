@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Footer() {
   return (
     <footer id="footer">
@@ -5,10 +7,10 @@ export default function Footer() {
         <div className="footer-content">
           <div className="footer-left">
             <div className="footer-logo">
-              <a href="/">
+              <Link href="/">
                 <h2 className="footer-brand">KANAUUU</h2>
                 <p className="footer-company">合同会社Kanauuu</p>
-              </a>
+              </Link>
             </div>
           </div>
           

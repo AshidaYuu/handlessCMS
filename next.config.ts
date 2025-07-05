@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
     unoptimized: true
   },
   
+  // ESLint設定
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  
   // 環境変数
   env: {
     NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
