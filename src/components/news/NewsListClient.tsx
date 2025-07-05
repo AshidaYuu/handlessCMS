@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Post } from '@/types'
@@ -22,6 +22,11 @@ function urlFor(source: any) {
 
 export default function NewsListClient({ posts }: NewsListClientProps) {
   const [currentPage, setCurrentPage] = useState(1)
+  const [isClient, setIsClient] = useState(false)
+  
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   
   const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE)
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
@@ -65,7 +70,9 @@ export default function NewsListClient({ posts }: NewsListClientProps) {
             : '/assets/images/ogp-image.png'
           
           const category = post.categories?.[0]?.title || 'お知らせ'
-          const dayOfWeek = new Date(post.publishedAt).toLocaleDateString('ja-JP', { weekday: 'short' }).toUpperCase()
+          const dayOfWeek = isClient 
+            ? new Date(post.publishedAt).toLocaleDateString('ja-JP', { weekday: 'short' }).toUpperCase()
+            : ''
           
           return (
             <Link
@@ -95,7 +102,9 @@ export default function NewsListClient({ posts }: NewsListClientProps) {
                 {/* Date */}
                 <div className="flex items-center gap-3 mb-3 text-gray-500 text-sm">
                   <time>{formatDate(post.publishedAt)}</time>
-                  <span className="font-medium">{dayOfWeek}</span>
+                  {isClient && dayOfWeek && (
+                    <span className="font-medium">{dayOfWeek}</span>
+                  )}
                 </div>
 
                 {/* Title */}

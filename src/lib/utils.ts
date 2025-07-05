@@ -5,12 +5,21 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// 日付フォーマット
+// 日付フォーマット（サーバー・クライアント一致）
 export function formatDate(date: string | Date): string {
-  const d = new Date(date)
-  if (isNaN(d.getTime())) return '日付不明'
-  
-  return `${d.getFullYear()}.${(d.getMonth() + 1).toString().padStart(2, '0')}.${d.getDate().toString().padStart(2, '0')}`
+  try {
+    const d = new Date(date)
+    if (isNaN(d.getTime())) return '日付不明'
+    
+    // タイムゾーンの影響を受けないように、UTCベースで計算
+    const year = d.getUTCFullYear()
+    const month = (d.getUTCMonth() + 1).toString().padStart(2, '0')
+    const day = d.getUTCDate().toString().padStart(2, '0')
+    
+    return `${year}.${month}.${day}`
+  } catch (error) {
+    return '日付不明'
+  }
 }
 
 // 相対日付（例: 3日前）
