@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Layout from '@/components/layout/Layout'
 import { sanityClient, queries } from '@/lib/sanity'
 import { Post } from '@/types'
-import { formatDate, generateMetadata as generateMeta } from '@/lib/utils'
+import { formatDate, generateMetadata } from '@/lib/utils'
 import Link from 'next/link'
 
 interface PageProps {
@@ -39,13 +39,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getPost(slug)
   
   if (!post) {
-    return generateMeta({
+    return generateMetadata({
       title: 'お知らせが見つかりません',
       description: 'お探しのお知らせは見つかりませんでした。',
     })
   }
 
-  return generateMeta({
+  return generateMetadata({
     title: post.title,
     description: post.excerpt || post.title,
     url: `/news/${post.slug.current}`,

@@ -4,9 +4,9 @@ import Layout from '@/components/layout/Layout'
 import { sanityClient, queries } from '@/lib/sanity'
 import { Post } from '@/types'
 import NewsListClient from '@/components/news/NewsListClient'
-import { generateMetadata as generateMeta } from '@/lib/utils'
+import { generateMetadata } from '@/lib/utils'
 
-export const metadata: Metadata = generateMeta({
+export const metadata: Metadata = generateMetadata({
   title: 'お知らせ一覧',
   description: 'Kanauuuからのお知らせ一覧です。最新の情報をご確認いただけます。',
   url: '/news',
