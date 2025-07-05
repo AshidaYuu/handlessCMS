@@ -14,7 +14,9 @@ export const metadata: Metadata = generateMetadata({
 
 async function getAllPosts(): Promise<Post[]> {
   try {
-    const posts = await sanityClient.fetch(queries.allPosts)
+    const posts = await sanityClient.fetch(queries.allPosts, {}, {
+      next: { revalidate: 60 } // 60秒でキャッシュ更新
+    })
     return posts || []
   } catch {
     console.error('Failed to fetch posts')

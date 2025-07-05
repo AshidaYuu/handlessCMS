@@ -15,7 +15,9 @@ interface PageProps {
 
 async function getPost(slug: string): Promise<Post | null> {
   try {
-    const post = await sanityClient.fetch(queries.postBySlug(slug))
+    const post = await sanityClient.fetch(queries.postBySlug(slug), { slug }, {
+      next: { revalidate: 60 } // 60秒でキャッシュ更新
+    })
     return post
   } catch {
     console.error('Failed to fetch post')
