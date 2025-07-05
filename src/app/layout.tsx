@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={notoSansJP.variable}>
-      <body className="font-sans antialiased bg-white text-gray-900">
+      <body className="font-sans antialiased bg-white text-gray-900" suppressHydrationWarning>
         {children}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
