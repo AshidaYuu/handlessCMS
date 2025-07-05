@@ -16,9 +16,7 @@ export const metadata: Metadata = {
 
 async function getLatestPosts(): Promise<Post[]> {
   try {
-    const posts = await sanityClient.fetch(queries.latestPosts(4), {}, {
-      next: { revalidate: 60 } // 60秒でキャッシュ更新
-    })
+    const posts = await sanityClient.fetch(queries.latestPosts(4))
     return posts || []
   } catch {
     console.error('Failed to fetch posts')

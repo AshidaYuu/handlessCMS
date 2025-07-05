@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Cloudflare Pages用の静的エクスポート設定
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
+  
   // ESLint設定
   eslint: {
     ignoreDuringBuilds: true,
