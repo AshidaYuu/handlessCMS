@@ -19,7 +19,6 @@ export function urlFor(source: SanityImage) {
 }
 
 // 型定義はtypes/index.tsにまとめられています
-export type { Post, SanityImage, Author, Category } from '@/types'
 
 // 記事取得用のクエリ
 export const queries = {

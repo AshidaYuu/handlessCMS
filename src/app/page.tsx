@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Layout from '@/components/layout/Layout'
-import { sanityClient, queries, Post } from '@/lib/sanity'
+import { sanityClient, queries } from '@/lib/sanity'
+import { Post } from '@/types'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -13,8 +14,8 @@ async function getLatestPosts(): Promise<Post[]> {
   try {
     const posts = await sanityClient.fetch(queries.latestPosts(4))
     return posts || []
-  } catch (error) {
-    console.error('Failed to fetch posts:', error)
+  } catch {
+    console.error('Failed to fetch posts')
     return []
   }
 }
