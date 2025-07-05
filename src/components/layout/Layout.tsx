@@ -5,7 +5,6 @@ import Script from 'next/script'
 
 interface LayoutProps {
   children: ReactNode
-  className?: string
 }
 
 export default function Layout({ children }: LayoutProps) {

@@ -23,7 +23,7 @@ export default async function HomePage() {
   const latestPosts = await getLatestPosts()
 
   return (
-    <Layout className="loading">
+    <Layout>
       {/* Main Visual Section */}
       <section id="main-visual">
         <div className="mv-background-slider">
